@@ -1,5 +1,6 @@
 import { GoogleGenAI, Type, Schema } from "@google/genai";
 import { GeneratedRecipe, InventoryItem } from "../types";
+import { BASE_GRIMOIRE_RECIPES } from "../constants";
 
 const genAI = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
@@ -14,21 +15,51 @@ const RECIPE_SCHEMA: Schema = {
         type: Type.OBJECT,
         properties: {
           item: { type: Type.STRING, description: "Name of the ingredient" },
-          amount: { type: Type.STRING, description: "Quantity" },
-          notes: { type: Type.STRING, description: "Prep notes" }
+          amount: { type: Type.STRING, description: "Quantity (oz, dashes, units)" },
+          notes: { type: Type.STRING, description: "Prep notes (e.g. 'Macerado', 'Flotante')" }
         }
       }
     },
     instructions: {
       type: Type.ARRAY,
-      items: { type: Type.STRING, description: "Step by step instruction" }
+      items: { type: Type.STRING, description: "Professional instruction (Verb + Action)" }
     },
     glassType: { type: Type.STRING, description: "Recommended glass type" },
     garnish: { type: Type.STRING, description: "Garnish suggestion" },
     flavorProfile: { type: Type.STRING, description: "3 descriptors (e.g. Ahumado, Cítrico, Sedoso)" },
-    whyItWorks: { type: Type.STRING, description: "Brief mixology explanation" }
+    whyItWorks: { type: Type.STRING, description: "Scientific/Mixology explanation of the pairing" }
   },
   required: ["name", "description", "ingredients", "instructions", "flavorProfile", "whyItWorks"]
+};
+
+// Updated Guide emphasizing Profit Margin and Volume
+const FLAVOR_ALCHEMY_GUIDE = `
+GUÍA ESTRATÉGICA DE INGREDIENTES (PROFIT & FLAVOR LOGIC):
+
+--- TIER 1: ALTA FRECUENCIA / ALTO MARGEN (PRIORIDAD ABSOLUTA) ---
+1.  **Seco Herrerano:** Base neutra de caña, muy económica. Úsalo como sustituto de Vodka, Ron Blanco o en mezclas frutales agresivas. ¡VENDE ESTO!
+2.  **Ron Añejo (Casa):** Económico y con sabor. Úsalo para todo lo que requiera cuerpo o notas de madera.
+3.  **Concentrado de Limón:** El alma del bar. Úsalo en el 80% de los tragos para balancear.
+4.  **Jugo de Naranja / Piña:** Mezcladores de volumen. Úsalos generosamente para tragos largos, Tiki o dulces. Son baratos y llenan el vaso.
+5.  **Jarabe de Goma ("La Broma"):** Esencial para textura y dulzor económico.
+
+--- TIER 2: FRECUENCIA MEDIA (ACENTOS) ---
+1.  **Ron Blanco (Bacardí):** Para cuando el cliente pide algo más "limpio" que el Seco.
+2.  **Vodka:** Neutro, solo si el perfil lo exige.
+3.  **Licores de Sabor (Banana/Melón/Café/Menta/Anís):** Úsalos como modificadores (0.5oz - 1oz), no como bases puras (excepto Anís si se pide explícitamente).
+
+--- TIER 3: BAJA FRECUENCIA / PREMIUM / COSTOSO (USAR CON CAUTELA) ---
+1.  **Tequila (Blanco/Reposado):** Costoso. Úsalo SOLO si el perfil es 'mood_party' (Margaritas) o 'style_tiki'.
+2.  **Mermelada de Coco:** Aporta textura pero es insumo específico. No abusar. Reservar para 'texture_silky'.
+3.  **Maracuyá:** Usar para perfiles 'sour' o 'tropical', pero alternar con Naranja/Piña para no repetir.
+4.  **Amaretto:** Costoso. Usar solo en perfiles 'mood_classy' o 'taste_complex'.
+`;
+
+const generateGrimoireContext = () => {
+  return BASE_GRIMOIRE_RECIPES.map((recipe, index) => {
+    const ingredients = recipe.ingredients.map(i => i.item).join(', ');
+    return `${index + 1}. **${recipe.name}**: ${ingredients} (${recipe.flavorProfile})`;
+  }).join('\n');
 };
 
 export const generateCocktailRecipe = async (
@@ -38,22 +69,38 @@ export const generateCocktailRecipe = async (
   
   const inventoryStr = inventory.map(cat => `${cat.category}: ${cat.items.join(', ')}`).join('\n');
   const userVibes = userResponses.join(', ');
+  const baseRecipesContext = generateGrimoireContext();
 
   const prompt = `
-    Actúa como 'El Alquimista', un mixólogo legendario y sofisticado.
-    Tu misión es diseñar un cóctel de autor ÚNICO utilizando el siguiente inventario y adaptado a las emociones del cliente.
+    Actúa como 'El Alquimista', un mixólogo experto enfocado en la RENTABILIDAD DEL BAR y la CREATIVIDAD.
+    
+    TUS OBJETIVOS:
+    1. Diseñar un cóctel delicioso.
+    2. MAXIMIZAR EL MARGEN DE GANANCIA usando ingredientes del TIER 1 (Seco Herrerano, Ron Añejo, Jugos Naranja/Piña).
+    3. EVITAR PATRONES REPETITIVOS. No uses siempre Maracuyá o Mermelada de Coco. Introduce variedad aleatoria (Entropía).
 
-    INVENTARIO:
+    CONTEXTO DE INGREDIENTES Y REGLAS DE NEGOCIO:
+    ${FLAVOR_ALCHEMY_GUIDE}
+
+    INVENTARIO REAL:
     ${inventoryStr}
 
-    PERFIL DEL CLIENTE (Vibe):
+    PERFIL DEL CLIENTE (INPUTS):
     ${userVibes}
 
-    REGLAS:
-    1. Usa SOLO el inventario provisto (asume hielo/básicos). "La Broma" es jarabe de azúcar.
-    2. El nombre debe ser místico, elegante o intrigante (en Español).
-    3. La descripción debe ser evocadora, usando lenguaje sensorial.
-    4. Crea combinaciones balanceadas pero interesantes.
+    GRIMORIO (INSPIRACIÓN DE RECETAS BASE - 45 ARQUETIPOS):
+    ${baseRecipesContext}
+
+    FORMATO DE RESPUESTA:
+    - **Instrucciones:** DEBEN SER PROFESIONALES. Usa verbos técnicos: "Agitar (Shake)", "Refrescar (Stir)", "Macerar (Muddle)", "Construir (Build)".
+    - **Descripción:** DEBE SER SEDUCTORA (Marketing). Vende la experiencia, no los ingredientes.
+
+    LÓGICA DE PUNTAJE Y SELECCIÓN:
+    - Si el mood es 'Fiesta' o 'Chill' -> OBLIGATORIO usar base TIER 1 (Seco Herrerano o Ron Añejo) + Mezclador TIER 1 (Naranja/Piña).
+    - Si el mood es 'Sofisticado' -> Permitido usar TIER 2 o 3 (Anís, Amaretto, Tequila), pero intenta cortar con Limón/Goma para bajar costo.
+    - Si pide 'Cítrico' -> Alternar entre Limón y Maracuyá (50/50 probabilidad). No siempre Maracuyá.
+    - Si pide 'Dulce' -> Alternar entre Naranja, Piña y Mermelada. Priorizar Naranja/Piña por costo.
+    - **FACTOR SORPRESA:** Si la combinación parece obvia, cámbiala. Ejemplo: En vez de Vodka con Naranja (Screwdriver), usa Seco Herrerano con Piña y un toque de Anís.
   `;
 
   try {
@@ -63,29 +110,37 @@ export const generateCocktailRecipe = async (
       config: {
         responseMimeType: 'application/json',
         responseSchema: RECIPE_SCHEMA,
-        temperature: 0.9
+        temperature: 1.3 // Increased temperature for higher creativity/entropy
       }
     });
 
     if (response.text) {
-      return JSON.parse(response.text) as GeneratedRecipe;
+      const parsed = JSON.parse(response.text);
+      return {
+        ...parsed,
+        id: crypto.randomUUID(),
+        createdAt: Date.now()
+      } as GeneratedRecipe;
     }
     throw new Error("No response text generated");
   } catch (error) {
     console.error("Error generating recipe:", error);
     return {
-      name: "El Elixir Fallido",
-      description: "La conexión con el éter se ha interrumpido. Un clásico reinventado para tiempos difíciles.",
+      id: crypto.randomUUID(),
+      createdAt: Date.now(),
+      name: "El Salvavidas del Barman",
+      description: "Cuando la alquimia falla, recurrimos a lo infalible y rentable.",
       ingredients: [
-        { item: "Ron Blanco", amount: "2 oz" },
-        { item: "Limón", amount: "0.75 oz" },
-        { item: "La Broma (Azúcar)", amount: "0.75 oz" }
+        { item: "Seco Herrerano", amount: "2 oz" },
+        { item: "Jugo de Naranja", amount: "3 oz" },
+        { item: "Concentrado de Limón", amount: "0.5 oz" },
+        { item: "La Broma", amount: "0.5 oz" }
       ],
-      instructions: ["Batir vigorosamente con hielo", "Servir en copa coupé congelada"],
-      glassType: "Coupé",
-      garnish: "Twist de limón",
-      flavorProfile: "Cítrico, Refrescante, Clásico",
-      whyItWorks: "Cuando la alquimia falla, el equilibrio clásico del Daiquiri siempre prevalece."
+      instructions: ["Construir (Build) en vaso con hielo.", "Remover suavemente.", "Decorar."],
+      glassType: "Highball",
+      garnish: "Naranja",
+      flavorProfile: "Cítrico, Refrescante, Rentable",
+      whyItWorks: "El Seco es neutro y la naranja gusta a todos."
     };
   }
 };
@@ -93,11 +148,13 @@ export const generateCocktailRecipe = async (
 export const generateCocktailImage = async (recipe: GeneratedRecipe): Promise<string | null> => {
   try {
     const prompt = `
-      Professional digital illustration of a cocktail named "${recipe.name}".
-      Visual description: ${recipe.description}.
-      Ingredients to feature visually: ${recipe.garnish}, ${recipe.glassType}.
-      Style: High-end, moody bar photography style, cinematic lighting, shallow depth of field, elegant, golden accents, dark background, 8k resolution, highly detailed, photorealistic liquid textures.
-      No text on image.
+      Professional food photography of a cocktail named "${recipe.name}".
+      Ingredients visible: ${recipe.ingredients.map(i => i.item).join(', ')}.
+      Glassware: ${recipe.glassType}.
+      Garnish: ${recipe.garnish}.
+      Atmosphere: Dark alchemy laboratory, moody lighting, smoke, gold accents, cinematic depth of field, 8k resolution, elegant, liquid motion.
+      Style: ${recipe.flavorProfile}.
+      Focus on the texture and color of the liquid.
     `;
 
     const response = await genAI.models.generateContent({
@@ -107,7 +164,6 @@ export const generateCocktailImage = async (recipe: GeneratedRecipe): Promise<st
       }
     });
 
-    // Iterate through parts to find the image
     const parts = response.candidates?.[0]?.content?.parts;
     if (parts) {
       for (const part of parts) {

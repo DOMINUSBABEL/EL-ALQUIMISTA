@@ -18,6 +18,8 @@ export interface QuizQuestion {
 }
 
 export interface GeneratedRecipe {
+  id: string; // Unique ID for history
+  createdAt: number; // Timestamp
   name: string;
   description: string;
   ingredients: {
@@ -33,4 +35,4 @@ export interface GeneratedRecipe {
   imageUrl?: string; // New field for the generated image
 }
 
-export type AppState = 'login' | 'welcome' | 'quiz' | 'generating' | 'result';
+export type AppState = 'login' | 'welcome' | 'quiz' | 'generating' | 'result' | 'history' | 'quickSelection';

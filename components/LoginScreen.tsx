@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, ArrowRight, Hexagon } from 'lucide-react';
+import { ArrowRight, Hexagon } from 'lucide-react';
 
 interface Props {
   onLoginSuccess: () => void;
@@ -17,7 +17,8 @@ export const LoginScreen: React.FC<Props> = ({ onLoginSuccess }) => {
     
     // Simulate a brief secure check
     setTimeout(() => {
-      if (username === 'ALQUIMISTA' && password === 'ALQUIMISTA') {
+      // Case insensitive check for better UX
+      if (username.toUpperCase().trim() === 'ALQUIMISTA' && password.toUpperCase().trim() === 'ALQUIMISTA') {
         onLoginSuccess();
       } else {
         setError(true);
@@ -54,10 +55,11 @@ export const LoginScreen: React.FC<Props> = ({ onLoginSuccess }) => {
                           type="text" 
                           value={username}
                           onChange={(e) => setUsername(e.target.value)}
-                          className="peer w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-gold transition-colors placeholder-transparent text-lg tracking-wide"
+                          className="peer w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-gold transition-colors placeholder-transparent text-lg tracking-wide uppercase"
                           id="username"
                           placeholder="Identificación"
                           autoComplete="off"
+                          autoFocus
                       />
                       <label htmlFor="username" className="absolute left-0 -top-3.5 text-xs text-gold-dim transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-gold uppercase tracking-widest">
                         Identidad
@@ -80,8 +82,8 @@ export const LoginScreen: React.FC<Props> = ({ onLoginSuccess }) => {
                 </div>
 
                 {error && (
-                    <div className="text-red-400 text-xs text-center font-serif tracking-widest animate-pulse border border-red-900/30 p-2 bg-red-900/10">
-                        ACCESO DENEGADO
+                    <div className="text-red-400 text-xs text-center font-serif tracking-widest animate-pulse border border-red-900/30 p-2 bg-red-900/10 uppercase">
+                        Acceso Denegado: Credenciales Inválidas
                     </div>
                 )}
 
