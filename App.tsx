@@ -50,7 +50,9 @@ const App: React.FC = () => {
       root.style.setProperty('--color-palm-neon', selectedTheme.colors.palmNeon);
       root.style.setProperty('--color-deep-purple', selectedTheme.colors.deepPurple);
       root.style.setProperty('--font-display', selectedTheme.fontDisplay);
+      root.style.setProperty('--font-sans', selectedTheme.fontSans);
       root.style.setProperty('--bg-pattern', selectedTheme.bgPattern);
+      root.style.setProperty('--bg-anim', selectedTheme.bgAnim);
     }
   }, [theme]);
 

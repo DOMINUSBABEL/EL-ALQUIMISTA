@@ -53,5 +53,7 @@ export interface ThemeDefinition {
     deepPurple: string;  // Tertiary/Shadow
   };
   fontDisplay: string;
+  fontSans: string;      // Dynamic body font for deep aesthetic change
   bgPattern: string;
+  bgAnim: string;        // CSS animation name (e.g. 'oceanFlow 15s ease-in-out infinite')
 }

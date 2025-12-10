@@ -16,7 +16,9 @@ export const THEMES: Record<string, ThemeDefinition> = {
       deepPurple: '138 43 226', // Blue Violet
     },
     fontDisplay: '"Cinzel", serif',
-    bgPattern: "url('https://www.transparenttextures.com/patterns/stardust.png')"
+    fontSans: '"Inter", sans-serif',
+    bgPattern: "url('https://www.transparenttextures.com/patterns/stardust.png')",
+    bgAnim: 'float 8s ease-in-out infinite'
   },
   pirate: {
     id: 'pirate',
@@ -29,20 +31,24 @@ export const THEMES: Record<string, ThemeDefinition> = {
       deepPurple: '87 95 207', // Ocean Blue
     },
     fontDisplay: '"UnifrakturMaguntia", cursive',
-    bgPattern: "url('https://www.transparenttextures.com/patterns/wood-pattern.png')"
+    fontSans: '"Inter", sans-serif', // Clean but classic
+    bgPattern: "url('https://www.transparenttextures.com/patterns/wood-pattern.png')",
+    bgAnim: 'oceanFlow 15s ease-in-out infinite'
   },
   cyberpunk: {
     id: 'cyberpunk',
     name: 'Cyberpunk 2077',
     colors: {
-      void: '0 0 0',          // Pure Black
+      void: '5 5 10',          // Near Black
       aquaBio: '0 255 234',   // Neon Cyan
       solarCoral: '255 0 85', // Neon Pink
       palmNeon: '57 255 20',  // Neon Green
       deepPurple: '136 0 255',// Neon Purple
     },
     fontDisplay: '"Orbitron", sans-serif',
-    bgPattern: "url('https://www.transparenttextures.com/patterns/cubes.png')"
+    fontSans: '"Rajdhani", sans-serif', // Techy body text
+    bgPattern: "url('https://www.transparenttextures.com/patterns/cubes.png')",
+    bgAnim: 'glitch 4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite'
   },
   chemical: {
     id: 'chemical',
@@ -55,6 +61,8 @@ export const THEMES: Record<string, ThemeDefinition> = {
       deepPurple: '148 163 184', // Sterile Grey
     },
     fontDisplay: '"Rajdhani", sans-serif',
-    bgPattern: "url('https://www.transparenttextures.com/patterns/hexellence.png')"
+    fontSans: '"Inter", sans-serif',
+    bgPattern: "url('https://www.transparenttextures.com/patterns/hexellence.png')",
+    bgAnim: 'liquid 10s ease-in-out infinite'
   }
 };

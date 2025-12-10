@@ -14,7 +14,7 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: ['Inter', 'sans-serif'],
+              sans: ['var(--font-sans)', 'sans-serif'],
               tech: ['Rajdhani', 'sans-serif'],
               display: ['var(--font-display)', 'serif'],
               classic: ['Cinzel', 'serif'],
@@ -52,6 +52,7 @@
               'spin-reverse': 'spin 25s linear infinite reverse',
               'liquid': 'liquid 8s ease-in-out infinite',
               'pop': 'pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+              'glitch': 'glitch 4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite',
             },
             keyframes: {
               fadeIn: {
@@ -70,9 +71,21 @@
                 '0%, 100%': { transform: 'scale(1.0) translate(0, 0)' },
                 '50%': { transform: 'scale(1.1) translate(-2%, 2%)' },
               },
+              liquid: {
+                '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
+                '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
+              },
               pop: {
                 '0%': { transform: 'scale(0.95)' },
                 '100%': { transform: 'scale(1)' },
+              },
+              glitch: {
+                 '0%': { transform: 'translate(0)' },
+                 '20%': { transform: 'translate(-2px, 2px)' },
+                 '40%': { transform: 'translate(-2px, -2px)' },
+                 '60%': { transform: 'translate(2px, 2px)' },
+                 '80%': { transform: 'translate(2px, -2px)' },
+                 '100%': { transform: 'translate(0)' }
               }
             }
           }
@@ -92,18 +105,25 @@
 </script>
     <style>
       :root {
-        /* Default Theme (Pirate/Caribbean) Values used as fallback or initial load */
+        /* Default Theme Values */
         --color-void: 11 15 20;
         --color-aqua-bio: 0 242 255;
         --color-solar-coral: 255 94 87;
         --color-palm-neon: 11 232 129;
         --color-deep-purple: 87 95 207;
         --font-display: 'UnifrakturMaguntia', cursive;
+        --font-sans: 'Inter', sans-serif;
         --bg-pattern: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+        --bg-anim: oceanFlow 15s ease-in-out infinite;
       }
 
       body::-webkit-scrollbar { display: none; }
       body { -ms-overflow-style: none; scrollbar-width: none; overscroll-behavior-y: none; }
+      
+      .animate-theme {
+         animation: var(--bg-anim);
+      }
+
       .glass-panel {
         background: rgba(var(--color-void) / 0.4);
         backdrop-filter: blur(20px);
@@ -128,7 +148,7 @@
       }
     </style>
 </head>
-  <body class="bg-void text-white antialiased selection:bg-aqua-bio selection:text-black overflow-x-hidden fixed inset-0 w-full h-full">
+  <body class="bg-void text-white font-sans antialiased selection:bg-aqua-bio selection:text-black overflow-x-hidden fixed inset-0 w-full h-full transition-colors duration-700">
     <div id="root" class="w-full h-full overflow-y-auto overflow-x-hidden"></div>
   </body>
 </html>

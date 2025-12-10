@@ -49,7 +49,7 @@ export const QuizScreen: React.FC<Props> = ({ onComplete, language }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col max-w-5xl mx-auto p-4 md:p-8 animate-fade-in bg-void relative overflow-hidden">
+    <div className="min-h-screen flex flex-col max-w-5xl mx-auto p-4 md:p-8 animate-fade-in bg-void relative overflow-y-auto">
       
       {/* --- BACKGROUND ATMOSPHERE --- */}
       <div className="absolute inset-0 pointer-events-none">
@@ -85,7 +85,7 @@ export const QuizScreen: React.FC<Props> = ({ onComplete, language }) => {
         </div>
       </div>
 
-      <div className={`relative z-10 flex-1 flex flex-col justify-center transition-all duration-500 ease-out ${isTransitioning ? 'opacity-0 translate-y-8 scale-95' : 'opacity-100 translate-y-0 scale-100'}`}>
+      <div className={`relative z-10 flex-1 flex flex-col justify-center transition-all duration-500 ease-out pb-10 ${isTransitioning ? 'opacity-0 translate-y-8 scale-95' : 'opacity-100 translate-y-0 scale-100'}`}>
         
         <div className="text-center mb-12">
              <h2 className="text-3xl md:text-5xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 mb-4 leading-tight tracking-tight drop-shadow-md">
@@ -100,7 +100,7 @@ export const QuizScreen: React.FC<Props> = ({ onComplete, language }) => {
         </div>
 
         {/* FLOATING CARDS GRID */}
-        <div className="grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 max-w-4xl mx-auto w-full">
+        <div className="grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 max-w-4xl mx-auto w-full pb-8">
           {currentQuestion.options.map((option, idx) => (
             <button
               key={option.id}

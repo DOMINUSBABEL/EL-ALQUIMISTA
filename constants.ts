@@ -58,19 +58,26 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
   {
     id: 'base-1',
     createdAt: 1700000000001,
-    name: 'El Clásico Renacido',
-    description: 'Una reinterpretación sofisticada del Daiquiri, donde la pureza del Ron Blanco baila con la acidez cítrica.',
+    name: 'Daiquiri Especial de la Casa',
+    description: 'Una variación creativa y potente del clásico. La frescura de la fresa se encuentra con la complejidad cítrica del Triple Sec.',
     ingredients: [
        { item: 'Ron Blanco (Bacardí)', amount: '2 oz' },
+       { item: 'Triple Sec', amount: '1 oz' },
        { item: 'Concentrado de Limón', amount: '1 oz' },
-       { item: 'La Broma (Jarabe)', amount: '0.75 oz' },
-       { item: 'Frutos Rojos', amount: '3 un', notes: 'Macerados' }
+       { item: 'La Broma (Jarabe)', amount: '1 oz' },
+       { item: 'Fresas (Frutos Rojos)', amount: '2 un', notes: 'Maceradas/Shaker' }
     ],
-    instructions: ['Macerar (Muddle) frutos rojos en shaker.', 'Agregar resto de ingredientes y hielo.', 'Agitar vigorosamente (Shake).', 'Doble colado (Double Strain).'],
+    instructions: [
+        'Escarchar el borde de la copa con AZÚCAR.',
+        'Macerar las fresas en el shaker.',
+        'Agregar hielo y el resto de los ingredientes.',
+        'Agitar vigorosamente (Shake).',
+        'Doble colado para evitar semillas.'
+    ],
     glassType: 'Coupé',
-    garnish: 'Twist de limón',
-    flavorProfile: 'Cítrico, Frutal',
-    whyItWorks: 'Equilibrio clásico sour con notas silvestres.',
+    garnish: 'Borde de Azúcar y Fresa',
+    flavorProfile: 'Cítrico, Frutal, Dulce',
+    whyItWorks: 'El Triple Sec eleva el perfil alcohólico y cítrico, balanceado por la carga extra de goma y fresas.',
     imageUrl: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80'
   },
   {
