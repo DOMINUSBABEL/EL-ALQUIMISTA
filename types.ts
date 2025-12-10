@@ -1,3 +1,4 @@
+
 export interface InventoryItem {
   category: string;
   items: string[];
@@ -36,3 +37,21 @@ export interface GeneratedRecipe {
 }
 
 export type AppState = 'login' | 'welcome' | 'quiz' | 'generating' | 'result' | 'history' | 'quickSelection';
+
+export type Language = 'es' | 'en' | 'fr' | 'de' | 'ru' | 'zh' | 'pt' | 'ar';
+
+export type ThemeId = 'alchemist' | 'pirate' | 'cyberpunk' | 'chemical';
+
+export interface ThemeDefinition {
+  id: ThemeId;
+  name: string;
+  colors: {
+    void: string;        // Background
+    aquaBio: string;     // Primary Highlight
+    solarCoral: string;  // Secondary Highlight
+    palmNeon: string;    // Accent
+    deepPurple: string;  // Tertiary/Shadow
+  };
+  fontDisplay: string;
+  bgPattern: string;
+}

@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type, Schema } from "@google/genai";
-import { GeneratedRecipe, InventoryItem } from "../types";
+import { GeneratedRecipe, InventoryItem, Language } from "../types";
 import { BASE_GRIMOIRE_RECIPES } from "../constants";
 
 const genAI = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -7,7 +7,7 @@ const genAI = new GoogleGenAI({ apiKey: process.env.API_KEY });
 const RECIPE_SCHEMA: Schema = {
   type: Type.OBJECT,
   properties: {
-    name: { type: Type.STRING, description: "Creative name of the cocktail (Spanish)" },
+    name: { type: Type.STRING, description: "Creative name of the cocktail" },
     description: { type: Type.STRING, description: "Elegant, sensory marketing description" },
     ingredients: {
       type: Type.ARRAY,
@@ -53,7 +53,33 @@ GUÍA ESTRATÉGICA DE INGREDIENTES (PROFIT & FLAVOR LOGIC):
 2.  **Mermelada de Coco:** Aporta textura pero es insumo específico. No abusar. Reservar para 'texture_silky'.
 3.  **Maracuyá:** Usar para perfiles 'sour' o 'tropical', pero alternar con Naranja/Piña para no repetir.
 4.  **Amaretto:** Costoso. Usar solo en perfiles 'mood_classy' o 'taste_complex'.
+
+--- PRINCIPIOS DE DENSIDAD Y FÍSICA (PARA TRAGOS VISUALES / POR CAPAS) ---
+Si el usuario pide algo "Visual", "Foto", "Instagrameable" o "Colorido", DEBES aplicar técnica de capas (Layering) basándote en la densidad.
+NO USAR SHAKER en estos casos. El método es "Construir (Build)".
+
+Orden de Densidad (De Abajo hacia Arriba):
+1.  **FONDO (Más Pesado):** Jarabes (Granadina, Mermeladas, Miel), Licores Crema, Licores muy dulces (Kahlúa/Café).
+2.  **MEDIO (Cuerpo):** Jugos de fruta con azúcar natural (Naranja, Piña, Maracuyá).
+3.  **TOPE (Más Ligero/Flotante):** Espirituosos de alta graduación (>40% ABV) sin azúcar (Ron, Vodka, Seco, Gin) o mezclas ligeras con agua/soda.
+    *   *Truco:* Para hacer el tope de color, mezcla el destilado con un poquito de licor de color (Blue Curaçao/Menta) aparte y viértelo suavemente.
+
+Instrucción Obligatoria para Capas: "Verter [Ingrediente] suavemente sobre el reverso de una cuchara para no mezclar capas."
 `;
+
+const getLanguageName = (code: Language): string => {
+  const map: Record<Language, string> = {
+    es: 'Español',
+    en: 'English',
+    fr: 'French',
+    de: 'German',
+    ru: 'Russian',
+    zh: 'Chinese (Simplified)',
+    pt: 'Portuguese',
+    ar: 'Arabic'
+  };
+  return map[code] || 'Español';
+};
 
 const generateGrimoireContext = () => {
   return BASE_GRIMOIRE_RECIPES.map((recipe, index) => {
@@ -64,20 +90,25 @@ const generateGrimoireContext = () => {
 
 export const generateCocktailRecipe = async (
   inventory: InventoryItem[],
-  userResponses: string[]
+  userResponses: string[],
+  language: Language = 'es'
 ): Promise<GeneratedRecipe> => {
   
   const inventoryStr = inventory.map(cat => `${cat.category}: ${cat.items.join(', ')}`).join('\n');
   const userVibes = userResponses.join(', ');
   const baseRecipesContext = generateGrimoireContext();
+  const targetLanguage = getLanguageName(language);
 
   const prompt = `
-    Actúa como 'El Alquimista', un mixólogo experto enfocado en la RENTABILIDAD DEL BAR y la CREATIVIDAD.
+    Actúa como 'El Alquimista', un mixólogo experto enfocado en la RENTABILIDAD DEL BAR, la CREATIVIDAD y la FÍSICA DE FLUIDOS.
     
+    IDIOMA DE RESPUESTA: ${targetLanguage}.
+    Debes generar TODO el contenido (nombre, descripción, instrucciones, etc.) en ${targetLanguage}.
+
     TUS OBJETIVOS:
     1. Diseñar un cóctel delicioso.
-    2. MAXIMIZAR EL MARGEN DE GANANCIA usando ingredientes del TIER 1 (Seco Herrerano, Ron Añejo, Jugos Naranja/Piña).
-    3. EVITAR PATRONES REPETITIVOS. No uses siempre Maracuyá o Mermelada de Coco. Introduce variedad aleatoria (Entropía).
+    2. MAXIMIZAR EL MARGEN DE GANANCIA usando ingredientes del TIER 1.
+    3. Si el input sugiere estética visual ('style_bright', 'style_tiki'), prioriza tragos POR CAPAS (Layered) usando los principios de densidad.
 
     CONTEXTO DE INGREDIENTES Y REGLAS DE NEGOCIO:
     ${FLAVOR_ALCHEMY_GUIDE}
@@ -91,16 +122,15 @@ export const generateCocktailRecipe = async (
     GRIMORIO (INSPIRACIÓN DE RECETAS BASE - 45 ARQUETIPOS):
     ${baseRecipesContext}
 
-    FORMATO DE RESPUESTA:
-    - **Instrucciones:** DEBEN SER PROFESIONALES. Usa verbos técnicos: "Agitar (Shake)", "Refrescar (Stir)", "Macerar (Muddle)", "Construir (Build)".
+    FORMATO DE RESPUESTA (EN ${targetLanguage}):
+    - **Instrucciones:** DEBEN SER PROFESIONALES. Usa verbos técnicos.
     - **Descripción:** DEBE SER SEDUCTORA (Marketing). Vende la experiencia, no los ingredientes.
 
     LÓGICA DE PUNTAJE Y SELECCIÓN:
     - Si el mood es 'Fiesta' o 'Chill' -> OBLIGATORIO usar base TIER 1 (Seco Herrerano o Ron Añejo) + Mezclador TIER 1 (Naranja/Piña).
     - Si el mood es 'Sofisticado' -> Permitido usar TIER 2 o 3 (Anís, Amaretto, Tequila), pero intenta cortar con Limón/Goma para bajar costo.
     - Si pide 'Cítrico' -> Alternar entre Limón y Maracuyá (50/50 probabilidad). No siempre Maracuyá.
-    - Si pide 'Dulce' -> Alternar entre Naranja, Piña y Mermelada. Priorizar Naranja/Piña por costo.
-    - **FACTOR SORPRESA:** Si la combinación parece obvia, cámbiala. Ejemplo: En vez de Vodka con Naranja (Screwdriver), usa Seco Herrerano con Piña y un toque de Anís.
+    - **FACTOR SORPRESA:** Si la combinación parece obvia, cámbiala.
   `;
 
   try {
@@ -125,6 +155,8 @@ export const generateCocktailRecipe = async (
     throw new Error("No response text generated");
   } catch (error) {
     console.error("Error generating recipe:", error);
+    // Fallback in Spanish/English depending on context is hard without more logic, 
+    // keeping fallback simple for now or potentially could be translated if needed.
     return {
       id: crypto.randomUUID(),
       createdAt: Date.now(),

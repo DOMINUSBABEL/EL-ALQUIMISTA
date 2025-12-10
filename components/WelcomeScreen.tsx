@@ -1,76 +1,101 @@
 import React from 'react';
-import { Hexagon, Sparkles, BookOpen, Zap } from 'lucide-react';
+import { Hexagon, Sparkles, BookOpen, Zap, Wind, Anchor } from 'lucide-react';
+import { Language } from '../types';
+import { TRANSLATIONS } from '../translations';
 
 interface Props {
   onStart: () => void;
   onFastTrack: () => void;
   onOpenHistory: () => void;
+  language: Language;
 }
 
-export const WelcomeScreen: React.FC<Props> = ({ onStart, onFastTrack, onOpenHistory }) => {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center animate-fade-in relative overflow-hidden bg-darkbg">
-      {/* Background Ambience */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gold/10 via-darkbg to-darkbg opacity-40 -z-10"></div>
-      <div className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-black via-transparent to-transparent -z-10"></div>
+export const WelcomeScreen: React.FC<Props> = ({ onStart, onFastTrack, onOpenHistory, language }) => {
+  const t = TRANSLATIONS[language].welcome;
 
-      <div className="flex flex-col flex-1 justify-center items-center w-full max-w-2xl mx-auto z-10">
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-6 text-center animate-fade-in relative overflow-hidden bg-void">
+      
+      {/* --- BACKGROUND ATMOSPHERE --- */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 bg-caribbean-night"></div>
+        {/* Bioluminescent Waves */}
+        <div className="absolute -top-[30%] -left-[10%] w-[120vw] h-[120vw] bg-aqua-bio/10 rounded-full blur-[100px] animate-ocean-flow mix-blend-screen"></div>
+        <div className="absolute -bottom-[30%] -right-[10%] w-[120vw] h-[120vw] bg-deep-purple/20 rounded-full blur-[100px] animate-ocean-flow mix-blend-screen" style={{ animationDelay: '5s' }}></div>
         
-        <div className="mb-12 relative animate-fade-in-up">
-           <div className="absolute inset-0 bg-gold blur-3xl opacity-10 animate-pulse-slow"></div>
-           <Hexagon className="w-24 h-24 text-gold stroke-[0.5] fill-gold/5" />
+        {/* Sacred Geometry */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140vw] h-[140vw] md:w-[900px] md:h-[900px] border border-aqua-bio/10 rounded-full animate-spin-slow opacity-30"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110vw] h-[110vw] md:w-[700px] md:h-[700px] border border-solar-coral/10 rotate-45 animate-spin-reverse opacity-30 dashed-border"></div>
+      </div>
+
+      <div className="flex flex-col flex-1 justify-center items-center w-full max-w-3xl mx-auto z-10 py-12">
+        
+        {/* Floating Logo - Caribbean Chrome */}
+        <div className="mb-8 md:mb-12 relative animate-float">
+           <div className="absolute inset-0 bg-aqua-bio/20 blur-[60px] opacity-40 animate-pulse-slow"></div>
+           <div className="relative group cursor-pointer transition-transform duration-500 hover:scale-110">
+              <Hexagon className="w-24 h-24 md:w-32 md:h-32 text-aqua-bio stroke-[0.5] fill-white/5 drop-shadow-[0_0_25px_rgba(0,242,255,0.6)]" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 border-2 border-solar-coral/50 rounded-full animate-spin-slow"></div>
+                <div className="absolute w-3 h-3 bg-white rounded-full shadow-[0_0_15px_#ffffff]"></div>
+              </div>
+           </div>
         </div>
 
-        <h1 className="font-display text-5xl md:text-7xl text-white mb-6 tracking-widest animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-          ALQUIMISTA
+        <h1 className="font-display font-black text-5xl sm:text-6xl md:text-8xl tropical-gradient-text mb-6 tracking-tight animate-fade-in-up drop-shadow-2xl">
+          {t.title}
         </h1>
         
-        <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-gold to-transparent mb-8"></div>
+        <div className="h-[2px] w-24 md:w-32 bg-gradient-to-r from-transparent via-aqua-bio to-transparent mb-8 md:mb-10 opacity-80"></div>
 
-        <p className="font-serif text-xl md:text-2xl text-gray-300 max-w-lg mb-12 leading-relaxed italic animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-          "Transformamos ingredientes ordinarios en experiencias extraordinarias. Déjame diseñar tu elixir perfecto."
+        <p className="font-sans font-light text-lg md:text-2xl text-gray-300 max-w-xs md:max-w-xl mb-10 md:mb-14 leading-relaxed animate-fade-in-up px-4 drop-shadow-lg">
+          "{t.quote}"
         </p>
 
-        <div className="flex flex-col gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <div className="flex flex-col md:flex-row gap-6">
+        <div className="flex flex-col gap-4 animate-fade-in-up w-full max-w-sm md:max-w-lg px-2" style={{ animationDelay: '0.3s' }}>
+            <div className="flex flex-col md:flex-row gap-4 justify-center">
+              
+              {/* PRIMARY ACTION: START RITUAL - Caribbean Gradient */}
               <button
                 onClick={onStart}
-                className="group relative inline-flex items-center justify-center px-10 py-5 overflow-hidden font-display font-bold tracking-[0.2em] text-gold border border-gold/30 hover:text-black transition-all duration-500 ease-out hover:border-gold"
+                className="group relative flex-1 h-16 overflow-hidden rounded-2xl shadow-glow-aqua transition-all duration-300 hover:scale-105 active:scale-95"
               >
-                <span className="absolute inset-0 w-full h-full bg-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></span>
-                <span className="relative flex items-center">
-                  COMENZAR RITUAL
-                  <Sparkles className="w-4 h-4 ml-3 group-hover:rotate-180 transition-transform duration-700" />
-                </span>
+                 <div className="absolute inset-0 bg-gradient-to-r from-aqua-bio to-blue-600 opacity-90 group-hover:opacity-100 transition-opacity"></div>
+                 {/* Water Ripple Effect */}
+                 <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/water.png')] animate-ocean-flow"></div>
+                 
+                 <div className="absolute inset-0 flex items-center justify-center gap-3 font-display font-bold tracking-[0.15em] text-black text-sm z-10">
+                    {t.start}
+                    <Sparkles className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" />
+                 </div>
               </button>
 
+              {/* SECONDARY ACTION: FAST TRACK - Solar Gradient Border */}
               <button
                 onClick={onFastTrack}
-                className="group relative inline-flex items-center justify-center px-8 py-5 overflow-hidden font-display font-bold tracking-[0.2em] text-white border border-white/20 hover:border-gold/50 transition-all duration-300"
+                className="group relative flex-1 h-16 overflow-hidden rounded-2xl bg-black/40 backdrop-blur-md border border-solar-coral/50 hover:border-solar-coral hover:shadow-glow-solar transition-all duration-300 hover:scale-105 active:scale-95"
               >
-                 <span className="absolute inset-0 w-full h-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
-                 <span className="relative flex items-center gap-2">
-                   DESTILACIÓN RÁPIDA
-                   <Zap className="w-4 h-4 text-gold" />
-                 </span>
+                 <div className="absolute inset-0 flex items-center justify-center gap-3 font-display font-bold tracking-[0.15em] text-solar-coral group-hover:text-white transition-colors text-sm z-10">
+                    {t.quick}
+                    <Zap className="w-4 h-4 group-hover:fill-current" />
+                 </div>
               </button>
             </div>
 
             <button
               onClick={onOpenHistory}
-              className="group inline-flex items-center justify-center px-8 py-4 font-display text-xs tracking-[0.2em] text-gray-500 hover:text-gold transition-colors duration-300 gap-2 hover:bg-white/5 rounded-sm mt-2"
+              className="group flex items-center justify-center gap-2 py-4 font-tech text-xs tracking-[0.3em] text-aqua-bio/70 hover:text-aqua-bio transition-colors uppercase hover:tracking-[0.4em] duration-300"
             >
               <BookOpen className="w-3 h-3" />
-              <span>MIS POCIONES</span>
+              <span>{t.archive}</span>
             </button>
         </div>
       </div>
 
-      <div className="absolute bottom-8 w-full flex justify-center gap-12 text-[10px] uppercase tracking-[0.3em] text-gold/30 font-display animate-fade-in" style={{ animationDelay: '1s' }}>
-        <span>Ron</span>
-        <span>Agave</span>
-        <span>Anís</span>
-        <span>Esencias</span>
+      <div className="absolute bottom-6 md:bottom-8 w-full flex justify-center gap-8 md:gap-16 text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-white/30 font-tech animate-fade-in select-none" style={{ animationDelay: '1s' }}>
+        <span className="flex items-center gap-2"><Zap className="w-3 h-3 text-solar-coral" /> {t.energy}</span>
+        <span className="flex items-center gap-2"><Anchor className="w-3 h-3 text-aqua-bio" /> {t.matter}</span>
+        <span className="flex items-center gap-2"><Hexagon className="w-3 h-3 text-palm-neon" /> {t.spirit}</span>
       </div>
     </div>
   );

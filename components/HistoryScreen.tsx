@@ -1,49 +1,49 @@
 import React from 'react';
-import { GeneratedRecipe } from '../types';
-import { ArrowLeft, Clock, Scroll, ChevronRight, Book } from 'lucide-react';
+import { GeneratedRecipe, Language } from '../types';
+import { ArrowLeft, Clock, Scroll, ChevronRight, Book, Database } from 'lucide-react';
+import { TRANSLATIONS } from '../translations';
 
 interface Props {
   history: GeneratedRecipe[];
   baseRecipes: GeneratedRecipe[];
   onSelectRecipe: (recipe: GeneratedRecipe) => void;
   onBack: () => void;
+  language: Language;
 }
 
-export const HistoryScreen: React.FC<Props> = ({ history, baseRecipes, onSelectRecipe, onBack }) => {
-  
+export const HistoryScreen: React.FC<Props> = ({ history, baseRecipes, onSelectRecipe, onBack, language }) => {
+  const t = TRANSLATIONS[language].history;
+
   const RecipeCard = ({ recipe, isBase = false }: { recipe: GeneratedRecipe, isBase?: boolean }) => (
     <button
       onClick={() => onSelectRecipe(recipe)}
-      className={`group relative border p-6 transition-all duration-300 text-left overflow-hidden flex flex-col h-full ${
+      className={`group relative p-6 rounded-2xl transition-all duration-300 text-left overflow-hidden flex flex-col h-full border hover:scale-[1.02] hover:shadow-lg ${
         isBase 
-          ? 'bg-darkbg border-gold/20 hover:border-gold/60 hover:bg-gold/5' 
-          : 'bg-cardbg border-white/5 hover:border-gold/30 hover:bg-white/5'
+          ? 'bg-black/40 border-deep-purple/30 hover:border-deep-purple hover:shadow-glow-aqua/20' 
+          : 'bg-white/5 border-white/10 hover:border-aqua-bio/50 hover:bg-white/10 hover:shadow-glow-aqua/10'
       }`}
     >
-      <div className="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
-          <ChevronRight className="w-4 h-4 text-gold" />
+      <div className="absolute top-0 right-0 p-4 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
+          <ChevronRight className={`w-4 h-4 ${isBase ? 'text-deep-purple' : 'text-aqua-bio'}`} />
       </div>
 
       <div className="mb-4">
-        <span className={`text-[10px] uppercase tracking-[0.2em] flex items-center gap-2 mb-2 ${isBase ? 'text-gold' : 'text-gold-dim'}`}>
-          {isBase ? <Book className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
-          {isBase ? 'GRIMORIO MAESTRO' : new Date(recipe.createdAt).toLocaleDateString()}
+        <span className={`text-[10px] font-tech uppercase tracking-wider flex items-center gap-2 mb-2 ${isBase ? 'text-deep-purple' : 'text-gray-400'}`}>
+          {isBase ? <Database className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
+          {isBase ? t.db : new Date(recipe.createdAt).toLocaleDateString()}
         </span>
-        <h3 className={`font-display text-xl transition-colors leading-tight ${isBase ? 'text-gold group-hover:text-white' : 'text-white group-hover:text-gold'}`}>
+        <h3 className={`font-display font-bold text-xl transition-colors leading-tight ${isBase ? 'text-white group-hover:text-deep-purple' : 'text-white group-hover:text-aqua-bio'}`}>
           {recipe.name}
         </h3>
       </div>
       
       <div className="mt-auto">
-        <div className={`w-full h-[1px] mb-3 transition-colors ${isBase ? 'bg-gold/20 group-hover:bg-gold/40' : 'bg-white/10 group-hover:bg-gold/20'}`}></div>
-        <p className="font-serif text-sm text-gray-400 italic line-clamp-2 mb-2">
-          {recipe.description}
+        <div className={`w-full h-[1px] mb-4 transition-colors ${isBase ? 'bg-deep-purple/20' : 'bg-white/10'}`}></div>
+        <p className="font-sans text-sm text-gray-400 line-clamp-2 mb-4 font-light italic">
+          "{recipe.description}"
         </p>
         <div className="flex flex-wrap gap-2">
-          <span className="text-[10px] border border-white/10 px-2 py-1 rounded-sm text-gray-500 uppercase tracking-wide">
-            {recipe.glassType}
-          </span>
-            <span className="text-[10px] border border-white/10 px-2 py-1 rounded-sm text-gray-500 uppercase tracking-wide">
+            <span className={`text-[9px] border px-2 py-1 rounded bg-black/20 font-tech uppercase ${isBase ? 'border-deep-purple/30 text-deep-purple' : 'border-white/10 text-gray-400'}`}>
             {recipe.flavorProfile.split(',')[0]}
           </span>
         </div>
@@ -52,34 +52,42 @@ export const HistoryScreen: React.FC<Props> = ({ history, baseRecipes, onSelectR
   );
 
   return (
-    <div className="min-h-screen flex flex-col p-6 animate-fade-in bg-darkbg relative max-w-6xl mx-auto">
+    <div className="min-h-screen flex flex-col p-4 md:p-8 animate-fade-in bg-void relative max-w-7xl mx-auto">
       
-      <div className="flex items-center mb-8 pt-4">
+      {/* --- BACKGROUND --- */}
+      <div className="fixed inset-0 pointer-events-none z-[-1]">
+         <div className="absolute inset-0 bg-caribbean-night"></div>
+         <div className="absolute top-[-20%] left-[-20%] w-[100vw] h-[100vw] bg-aqua-bio/5 rounded-full blur-[100px] animate-ocean-flow"></div>
+         <div className="absolute bottom-[-20%] right-[-20%] w-[100vw] h-[100vw] bg-deep-purple/10 rounded-full blur-[100px] animate-ocean-flow" style={{ animationDelay: '3s' }}></div>
+      </div>
+
+      <div className="flex items-center mb-8 md:mb-12 pt-4 border-b border-white/10 pb-6 sticky top-0 bg-void/90 backdrop-blur-md z-20 -mx-4 px-4 md:static md:bg-transparent md:mx-0 md:px-0">
         <button 
           onClick={onBack}
-          className="p-2 hover:bg-white/10 rounded-full transition-colors mr-4 group"
+          className="p-3 border border-white/10 hover:border-aqua-bio hover:bg-aqua-bio/10 rounded-full transition-all mr-6 group active:scale-95"
         >
-          <ArrowLeft className="w-6 h-6 text-gold group-hover:-translate-x-1 transition-transform" />
+          <ArrowLeft className="w-5 h-5 text-white group-hover:-translate-x-1 transition-transform group-hover:text-aqua-bio" />
         </button>
         <div>
-          <h1 className="font-display text-3xl text-white tracking-widest">LIBRO DE POCIONES</h1>
-          <p className="font-serif text-gold-dim italic text-sm">Archivo de conocimiento alquímico</p>
+          <h1 className="font-display font-bold text-3xl md:text-4xl text-white tracking-tight mb-1 tropical-gradient-text">{t.title}</h1>
+          <p className="font-tech text-xs text-aqua-bio uppercase tracking-[0.2em]">{t.subtitle}</p>
         </div>
       </div>
 
       {/* User History Section */}
       <div className="mb-12">
-        <h2 className="font-display text-white text-lg tracking-widest mb-6 border-b border-white/10 pb-2 flex items-center gap-2">
-          <Scroll className="w-4 h-4 text-gold" />
-          MIS DESCUBRIMIENTOS
+        <h2 className="font-tech text-gray-400 text-xs tracking-[0.2em] mb-6 flex items-center gap-3">
+          <Scroll className="w-4 h-4 text-solar-coral" />
+          {t.recent}
         </h2>
         
         {history.length === 0 ? (
-          <div className="p-8 border border-dashed border-white/10 rounded-sm text-center">
-            <p className="font-serif text-gray-500 italic">Aún no has creado pociones propias.</p>
+          <div className="p-10 border border-dashed border-white/10 rounded-3xl text-center bg-white/5 flex flex-col items-center justify-center">
+            <Database className="w-8 h-8 text-gray-600 mb-2" />
+            <p className="font-sans text-gray-500">{t.empty}</p>
           </div>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {history.map((recipe) => (
               <RecipeCard key={recipe.id} recipe={recipe} />
             ))}
@@ -88,12 +96,12 @@ export const HistoryScreen: React.FC<Props> = ({ history, baseRecipes, onSelectR
       </div>
 
       {/* Base Grimoire Section */}
-      <div>
-        <h2 className="font-display text-white text-lg tracking-widest mb-6 border-b border-white/10 pb-2 flex items-center gap-2">
-           <Book className="w-4 h-4 text-gold" />
-           EL GRIMORIO MAESTRO (15 BASES)
+      <div className="pb-12">
+        <h2 className="font-tech text-gray-400 text-xs tracking-[0.2em] mb-6 flex items-center gap-3">
+           <Book className="w-4 h-4 text-aqua-bio" />
+           {t.master}
         </h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {baseRecipes.map((recipe) => (
             <RecipeCard key={recipe.id} recipe={recipe} isBase={true} />
           ))}

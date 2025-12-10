@@ -2,37 +2,56 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#02040a">
     <title>ALQUIMISTA</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;600;800&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
           extend: {
             fontFamily: {
               sans: ['Inter', 'sans-serif'],
-              serif: ['Cormorant Garamond', 'serif'],
-              display: ['Cinzel', 'serif'],
+              tech: ['Rajdhani', 'sans-serif'],
+              display: ['var(--font-display)', 'serif'],
+              classic: ['Cinzel', 'serif'],
+              gothic: ['UnifrakturMaguntia', 'cursive'],
+              arabic: ['Cairo', 'sans-serif'],
             },
             colors: {
-              gold: '#D4AF37',
-              'gold-dim': '#AA8C2C',
-              'gold-light': '#F3E5AB',
-              darkbg: '#050507',
-              cardbg: '#121216',
+              void: 'rgb(var(--color-void) / <alpha-value>)',
+              'glass-border': 'rgba(255, 255, 255, 0.1)',
+              'aqua-bio': 'rgb(var(--color-aqua-bio) / <alpha-value>)',
+              'solar-coral': 'rgb(var(--color-solar-coral) / <alpha-value>)',
+              'palm-neon': 'rgb(var(--color-palm-neon) / <alpha-value>)',
+              'deep-purple': 'rgb(var(--color-deep-purple) / <alpha-value>)',
+              'silver': '#e2e8f0',
             },
             backgroundImage: {
-              'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-              'luxury': 'linear-gradient(to bottom, #050507, #0F0F13)',
+              'caribbean-night': 'radial-gradient(circle at 50% 0%, rgba(var(--color-deep-purple) / 0.3) 0%, rgb(var(--color-void)) 100%)',
+              'biolum-gradient': 'conic-gradient(at top right, rgb(var(--color-aqua-bio)) 0%, transparent 50%), radial-gradient(at bottom left, rgb(var(--color-deep-purple)) 0%, transparent 50%)',
+              'theme-pattern': 'var(--bg-pattern)',
+              'glass-gradient': 'linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02))',
+              'sunset-glow': 'linear-gradient(to right, rgb(var(--color-solar-coral)), rgb(var(--color-palm-neon)))',
+            },
+            boxShadow: {
+              'glow-aqua': '0 0 15px rgba(var(--color-aqua-bio) / 0.4), 0 0 30px rgba(var(--color-aqua-bio) / 0.2)',
+              'glow-solar': '0 0 15px rgba(var(--color-solar-coral) / 0.4), 0 0 30px rgba(var(--color-solar-coral) / 0.2)',
+              'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
             },
             animation: {
-              'fade-in': 'fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-              'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-              'slide-up': 'slideUp 0.6s ease-out',
+              'fade-in': 'fadeIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)',
+              'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)',
               'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'shimmer': 'shimmer 2s infinite linear',
-              'reveal': 'reveal 1.5s ease-out forwards',
+              'float': 'float 6s ease-in-out infinite',
+              'ocean-flow': 'oceanFlow 15s ease-in-out infinite',
+              'spin-slow': 'spin 20s linear infinite',
+              'spin-reverse': 'spin 25s linear infinite reverse',
+              'liquid': 'liquid 8s ease-in-out infinite',
+              'pop': 'pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
             },
             keyframes: {
               fadeIn: {
@@ -40,20 +59,20 @@
                 '100%': { opacity: '1' },
               },
               fadeInUp: {
-                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '0%': { opacity: '0', transform: 'translateY(30px)' },
                 '100%': { opacity: '1', transform: 'translateY(0)' },
               },
-              slideUp: {
-                '0%': { transform: 'translateY(30px)', opacity: '0' },
-                '100%': { transform: 'translateY(0)', opacity: '1' },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
               },
-              shimmer: {
-                '0%': { backgroundPosition: '-1000px 0' },
-                '100%': { backgroundPosition: '1000px 0' }
+              oceanFlow: {
+                '0%, 100%': { transform: 'scale(1.0) translate(0, 0)' },
+                '50%': { transform: 'scale(1.1) translate(-2%, 2%)' },
               },
-              reveal: {
-                '0%': { opacity: '0', filter: 'blur(10px)' },
-                '100%': { opacity: '1', filter: 'blur(0)' }
+              pop: {
+                '0%': { transform: 'scale(0.95)' },
+                '100%': { transform: 'scale(1)' },
               }
             }
           }
@@ -71,8 +90,45 @@
   }
 }
 </script>
+    <style>
+      :root {
+        /* Default Theme (Pirate/Caribbean) Values used as fallback or initial load */
+        --color-void: 11 15 20;
+        --color-aqua-bio: 0 242 255;
+        --color-solar-coral: 255 94 87;
+        --color-palm-neon: 11 232 129;
+        --color-deep-purple: 87 95 207;
+        --font-display: 'UnifrakturMaguntia', cursive;
+        --bg-pattern: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+      }
+
+      body::-webkit-scrollbar { display: none; }
+      body { -ms-overflow-style: none; scrollbar-width: none; overscroll-behavior-y: none; }
+      .glass-panel {
+        background: rgba(var(--color-void) / 0.4);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(var(--color-aqua-bio) / 0.15);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+      }
+      .chrome-text {
+        background: linear-gradient(to bottom, #ffffff 0%, rgba(var(--color-aqua-bio) / 0.5) 50%, rgb(var(--color-aqua-bio)) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0px 0px 10px rgba(var(--color-aqua-bio) / 0.3);
+      }
+      .tropical-gradient-text {
+        background: linear-gradient(to right, rgb(var(--color-aqua-bio)), rgb(var(--color-solar-coral)));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      /* RTL Support */
+      [dir="rtl"] {
+        font-family: 'Cairo', 'Inter', sans-serif;
+      }
+    </style>
 </head>
-  <body class="bg-darkbg text-white antialiased selection:bg-gold selection:text-black overflow-x-hidden">
-    <div id="root"></div>
+  <body class="bg-void text-white antialiased selection:bg-aqua-bio selection:text-black overflow-x-hidden fixed inset-0 w-full h-full">
+    <div id="root" class="w-full h-full overflow-y-auto overflow-x-hidden"></div>
   </body>
 </html>

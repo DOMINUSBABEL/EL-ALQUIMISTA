@@ -70,7 +70,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Coupé',
     garnish: 'Twist de limón',
     flavorProfile: 'Cítrico, Frutal',
-    whyItWorks: 'Equilibrio clásico sour con notas silvestres.'
+    whyItWorks: 'Equilibrio clásico sour con notas silvestres.',
+    imageUrl: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-2',
@@ -87,7 +88,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Highball',
     garnish: 'Rodaja de Naranja',
     flavorProfile: 'Dulce, Cítrico',
-    whyItWorks: 'La naranja complementa las notas de madera del reposado.'
+    whyItWorks: 'La naranja complementa las notas de madera del reposado.',
+    imageUrl: 'https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-3',
@@ -104,7 +106,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Martini',
     garnish: 'Esfera de Melón o Limón',
     flavorProfile: 'Dulce, Neón, Frutal',
-    whyItWorks: 'El limón corta el dulzor del melón permitiendo que brille.'
+    whyItWorks: 'El limón corta el dulzor del melón permitiendo que brille.',
+    imageUrl: 'https://images.unsplash.com/photo-1609345265499-2133bbeb6ce5?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-4',
@@ -121,7 +124,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Old Fashioned',
     garnish: 'Anís estrella',
     flavorProfile: 'Herbal, Intenso, Sedoso',
-    whyItWorks: 'La acidez del limón doma la potencia del anís.'
+    whyItWorks: 'La acidez del limón doma la potencia del anís.',
+    imageUrl: 'https://images.unsplash.com/photo-1549419163-9524e94b2f15?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-5',
@@ -137,7 +141,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Old Fashioned',
     garnish: 'Piel de Naranja',
     flavorProfile: 'Café, Dulce, Robusto',
-    whyItWorks: 'Tres perfiles dulces y tostados que se complementan.'
+    whyItWorks: 'Tres perfiles dulces y tostados que se complementan.',
+    imageUrl: 'https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-6',
@@ -154,7 +159,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Vaso Corto',
     garnish: 'Ramita de hierbabuena',
     flavorProfile: 'Fresco, Herbal',
-    whyItWorks: 'La menta y el limón son la pareja refrescante por excelencia.'
+    whyItWorks: 'La menta y el limón son la pareja refrescante por excelencia.',
+    imageUrl: 'https://images.unsplash.com/photo-1596547608883-9b4334c9c7c2?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-7',
@@ -171,7 +177,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Tiki Mug / Highball',
     garnish: 'Triángulo de Piña',
     flavorProfile: 'Tropical, Frutal, Complejo',
-    whyItWorks: 'Banana y Piña crean la base tropical perfecta.'
+    whyItWorks: 'Banana y Piña crean la base tropical perfecta.',
+    imageUrl: 'https://images.unsplash.com/photo-1592314541703-455b706c6418?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-8',
@@ -188,7 +195,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Rocas',
     garnish: 'Borde Michelado',
     flavorProfile: 'Picante, Ácido, Salado',
-    whyItWorks: 'La capsaicina resalta las notas terrosas del tequila.'
+    whyItWorks: 'La capsaicina resalta las notas terrosas del tequila.',
+    imageUrl: 'https://images.unsplash.com/photo-1534353473418-4cfa6c56fd38?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-9',
@@ -204,7 +212,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Highball',
     garnish: 'Media luna de naranja',
     flavorProfile: 'Aromático, Cítrico',
-    whyItWorks: 'El anís actúa como especia aromática sobre la naranja.'
+    whyItWorks: 'El anís actúa como especia aromática sobre la naranja.',
+    imageUrl: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-10',
@@ -221,7 +230,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Copa Huracán',
     garnish: 'Piña',
     flavorProfile: 'Cremoso, Tropical, Dulce',
-    whyItWorks: 'La mermelada aporta la textura cremosa sin lácteos.'
+    whyItWorks: 'La mermelada aporta la textura cremosa sin lácteos.',
+    imageUrl: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=800&q=80'
   },
 
   // --- GRUPO 2: RENTABILIDAD MÁXIMA (Seco Herrerano & Ron Añejo) (11-20) ---
@@ -240,7 +250,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Rocas',
     garnish: 'Rodaja de Limón',
     flavorProfile: 'Cítrico, Seco, Herbal',
-    whyItWorks: 'Sustitución local del Gin Sour, usando Anís para complejidad.'
+    whyItWorks: 'Sustitución local del Gin Sour, usando Anís para complejidad.',
+    imageUrl: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-12',
@@ -257,7 +268,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Highball',
     garnish: 'Naranja',
     flavorProfile: 'Frutal, Dulce, Visual',
-    whyItWorks: 'Versión rentable del Sex on the Beach usando Seco.'
+    whyItWorks: 'Versión rentable del Sex on the Beach usando Seco.',
+    imageUrl: 'https://images.unsplash.com/photo-1536935338788-843bb6303669?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-13',
@@ -274,7 +286,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Old Fashioned',
     garnish: 'Piel de Naranja',
     flavorProfile: 'Maderoso, Seco',
-    whyItWorks: 'Old Fashioned de bajo costo usando Ron Añejo.'
+    whyItWorks: 'Old Fashioned de bajo costo usando Ron Añejo.',
+    imageUrl: 'https://images.unsplash.com/photo-1629851759654-754d9c79f323?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-14',
@@ -291,7 +304,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Highball',
     garnish: 'Hoja de Piña',
     flavorProfile: 'Tropical, Dulce',
-    whyItWorks: 'La banana potencia el dulzor natural de la piña.'
+    whyItWorks: 'La banana potencia el dulzor natural de la piña.',
+    imageUrl: 'https://images.unsplash.com/photo-1546171753-97d7676e4602?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-15',
@@ -308,7 +322,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Highball',
     garnish: 'Media luna de Naranja',
     flavorProfile: 'Ácido, Frutal',
-    whyItWorks: 'Combinación infalible de ácidos y base neutra.'
+    whyItWorks: 'Combinación infalible de ácidos y base neutra.',
+    imageUrl: 'https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-16',
@@ -325,7 +340,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Highball',
     garnish: 'Rodaja de Limón',
     flavorProfile: 'Cítrico, Fresco',
-    whyItWorks: 'La menta da una frescura oculta a la limonada con piquete.'
+    whyItWorks: 'La menta da una frescura oculta a la limonada con piquete.',
+    imageUrl: 'https://images.unsplash.com/photo-1597075687490-8f673c6c17f6?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-17',
@@ -341,7 +357,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Coupé / Martini',
     garnish: 'Granos de café',
     flavorProfile: 'Café, Dulce, Fuerte',
-    whyItWorks: 'Versión económica del Espresso Martini usando Seco.'
+    whyItWorks: 'Versión económica del Espresso Martini usando Seco.',
+    imageUrl: 'https://images.unsplash.com/photo-1629851759654-754d9c79f323?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-18',
@@ -357,7 +374,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Rocas',
     garnish: 'Sin Garnish',
     flavorProfile: 'Dulce, Tropical',
-    whyItWorks: 'El limón corta el exceso de azúcar del licor de banana.'
+    whyItWorks: 'El limón corta el exceso de azúcar del licor de banana.',
+    imageUrl: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-19',
@@ -374,7 +392,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Highball',
     garnish: 'Triángulo de Piña',
     flavorProfile: 'Coco, Piña, Refrescante',
-    whyItWorks: 'La combinación clásica Piña-Coco usando base económica.'
+    whyItWorks: 'La combinación clásica Piña-Coco usando base económica.',
+    imageUrl: 'https://images.unsplash.com/photo-1546171753-97d7676e4602?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-20',
@@ -390,7 +409,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Shot',
     garnish: 'Borde con sal',
     flavorProfile: 'Picante, Ácido',
-    whyItWorks: 'Maracuyá y picante en formato rápido.'
+    whyItWorks: 'Maracuyá y picante en formato rápido.',
+    imageUrl: 'https://images.unsplash.com/photo-1572097316712-4293f0607675?auto=format&fit=crop&w=800&q=80'
   },
 
   // --- GRUPO 3: EXPERIMENTALES Y COMPLEJOS (21-35) ---
@@ -409,7 +429,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Coupé',
     garnish: 'Hoja de Menta golpeada',
     flavorProfile: 'Fresco, Cítrico',
-    whyItWorks: 'Mojito "Up" (sin hielo en copa) y más elegante.'
+    whyItWorks: 'Mojito "Up" (sin hielo en copa) y más elegante.',
+    imageUrl: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-22',
@@ -426,7 +447,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Rocas',
     garnish: 'Frutos rojos',
     flavorProfile: 'Frutal, Ácido',
-    whyItWorks: 'Caipiroska de frutos rojos clásica.'
+    whyItWorks: 'Caipiroska de frutos rojos clásica.',
+    imageUrl: 'https://images.unsplash.com/photo-1582234057945-84725d2c253c?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-23',
@@ -442,7 +464,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Old Fashioned',
     garnish: 'Piel de Naranja',
     flavorProfile: 'Dulce, Nuez, Maderoso',
-    whyItWorks: 'El Amaretto suaviza el ron añejo perfectamente.'
+    whyItWorks: 'El Amaretto suaviza el ron añejo perfectamente.',
+    imageUrl: 'https://images.unsplash.com/photo-1629851759654-754d9c79f323?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-24',
@@ -459,7 +482,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Highball',
     garnish: 'Limón',
     flavorProfile: 'Fuerte, Dulce, Frutal',
-    whyItWorks: 'Mezcla de espirituosos blancos "ocultos" por la piña y melón.'
+    whyItWorks: 'Mezcla de espirituosos blancos "ocultos" por la piña y melón.',
+    imageUrl: 'https://images.unsplash.com/photo-1597075687490-8f673c6c17f6?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-25',
@@ -476,7 +500,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Coupé / Rocas',
     garnish: 'Borde Salado',
     flavorProfile: 'Cítrico, Salado',
-    whyItWorks: 'Uso de jarabe para equilibrar el ácido sin gastar tanto Triple Sec.'
+    whyItWorks: 'Uso de jarabe para equilibrar el ácido sin gastar tanto Triple Sec.',
+    imageUrl: 'https://images.unsplash.com/photo-1549419163-9524e94b2f15?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-26',
@@ -492,7 +517,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Rocas',
     garnish: 'Piel de Naranja',
     flavorProfile: 'Café, Madera, Dulce',
-    whyItWorks: 'Revolver sabores oscuros siempre funciona.'
+    whyItWorks: 'Revolver sabores oscuros siempre funciona.',
+    imageUrl: 'https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-27',
@@ -510,7 +536,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Tiki / Highball',
     garnish: 'Menta y Naranja',
     flavorProfile: 'Frutal, Potente',
-    whyItWorks: 'Rum Punch clásico.'
+    whyItWorks: 'Rum Punch clásico.',
+    imageUrl: 'https://images.unsplash.com/photo-1536935338788-843bb6303669?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-28',
@@ -527,7 +554,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Martini',
     garnish: 'Coco rallado si hay',
     flavorProfile: 'Dulce, Cremoso',
-    whyItWorks: 'Postre líquido.'
+    whyItWorks: 'Postre líquido.',
+    imageUrl: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-29',
@@ -544,7 +572,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Rocas',
     garnish: 'Tajín',
     flavorProfile: 'Picante, Dulce',
-    whyItWorks: 'Piña y picante son mejores amigos.'
+    whyItWorks: 'Piña y picante son mejores amigos.',
+    imageUrl: 'https://images.unsplash.com/photo-1572097316712-4293f0607675?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-30',
@@ -560,7 +589,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Highball',
     garnish: 'Rodaja Naranja',
     flavorProfile: 'Herbal, Refrescante',
-    whyItWorks: 'El agua abre el anís (efecto ouzo) y la naranja endulza.'
+    whyItWorks: 'El agua abre el anís (efecto ouzo) y la naranja endulza.',
+    imageUrl: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80'
   },
 
   // --- GRUPO 4: MIXOLOGÍA DE AUTOR CON INVENTARIO LIMITADO (31-45) ---
@@ -579,7 +609,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Coupé',
     garnish: 'Pétalo o Fruto rojo',
     flavorProfile: 'Frutal, Sedoso',
-    whyItWorks: 'Coco y Frutos rojos crean perfil de "Cheesecake".'
+    whyItWorks: 'Coco y Frutos rojos crean perfil de "Cheesecake".',
+    imageUrl: 'https://images.unsplash.com/photo-1582234057945-84725d2c253c?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-32',
@@ -596,7 +627,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Martini',
     garnish: 'Borde de Azúcar',
     flavorProfile: 'Cítrico, Seco',
-    whyItWorks: 'Lemon Drop panameño.'
+    whyItWorks: 'Lemon Drop panameño.',
+    imageUrl: 'https://images.unsplash.com/photo-1639745973950-c63bf1c70ae8?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-33',
@@ -612,7 +644,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Rocas',
     garnish: 'Piel de Naranja',
     flavorProfile: 'Dulce, Tostado',
-    whyItWorks: 'Perfil de postre Bananas Foster.'
+    whyItWorks: 'Perfil de postre Bananas Foster.',
+    imageUrl: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-34',
@@ -629,7 +662,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Highball',
     garnish: 'Cereza o Melón',
     flavorProfile: 'Dulce, Neón',
-    whyItWorks: 'El toque de limón balancea el exceso de azúcar.'
+    whyItWorks: 'El toque de limón balancea el exceso de azúcar.',
+    imageUrl: 'https://images.unsplash.com/photo-1609345265499-2133bbeb6ce5?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-35',
@@ -645,7 +679,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Highball',
     garnish: 'Menta',
     flavorProfile: 'Mentolado, Ligero',
-    whyItWorks: 'Highball digestivo y refrescante.'
+    whyItWorks: 'Highball digestivo y refrescante.',
+    imageUrl: 'https://images.unsplash.com/photo-1596547608883-9b4334c9c7c2?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-36',
@@ -661,7 +696,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Rocas',
     garnish: 'Naranja',
     flavorProfile: 'Cítrico, Tostado',
-    whyItWorks: 'Naranja y Café es una combinación clásica de desayuno/brunch.'
+    whyItWorks: 'Naranja y Café es una combinación clásica de desayuno/brunch.',
+    imageUrl: 'https://images.unsplash.com/photo-1536935338788-843bb6303669?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-37',
@@ -678,7 +714,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Coupé',
     garnish: 'Coco',
     flavorProfile: 'Tropical, Ácido',
-    whyItWorks: 'Balance perfecto ácido-graso (coco).'
+    whyItWorks: 'Balance perfecto ácido-graso (coco).',
+    imageUrl: 'https://images.unsplash.com/photo-1529604278261-8bfcdb00a7b9?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-38',
@@ -696,7 +733,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Highball Grande',
     garnish: 'Limón',
     flavorProfile: 'Fuerte, Dulce',
-    whyItWorks: 'La mezcla de blancos para potencia.'
+    whyItWorks: 'La mezcla de blancos para potencia.',
+    imageUrl: 'https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-39',
@@ -713,7 +751,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Rocas',
     garnish: 'Cereza',
     flavorProfile: 'Dulce, Ácido',
-    whyItWorks: 'El Seco "estira" el Amaretto sin perder perfil.'
+    whyItWorks: 'El Seco "estira" el Amaretto sin perder perfil.',
+    imageUrl: 'https://images.unsplash.com/photo-1639745973950-c63bf1c70ae8?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-40',
@@ -730,7 +769,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Vaso Corto',
     garnish: 'Frutos rojos',
     flavorProfile: 'Frutal, Visual, Ácido',
-    whyItWorks: 'Técnica de Bramble clásico.'
+    whyItWorks: 'Técnica de Bramble clásico.',
+    imageUrl: 'https://images.unsplash.com/photo-1599021406649-8041c490f055?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-41',
@@ -746,7 +786,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Rocas',
     garnish: 'Limón',
     flavorProfile: 'Cítrico, Potente',
-    whyItWorks: 'Macerado extrae aceites esenciales de la cáscara.'
+    whyItWorks: 'Macerado extrae aceites esenciales de la cáscara.',
+    imageUrl: 'https://images.unsplash.com/photo-1566737236500-c8ac43014a67?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-42',
@@ -763,7 +804,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Highball',
     garnish: 'Menta',
     flavorProfile: 'Coco, Menta, Fresco',
-    whyItWorks: 'Coco y Menta funcionan sorprendentemente bien.'
+    whyItWorks: 'Coco y Menta funcionan sorprendentemente bien.',
+    imageUrl: 'https://images.unsplash.com/photo-1517093157656-b9ecbf90b345?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-43',
@@ -780,7 +822,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Rocas',
     garnish: 'Tajín',
     flavorProfile: 'Ácido, Maderoso',
-    whyItWorks: 'Perfil clásico moderno.'
+    whyItWorks: 'Perfil clásico moderno.',
+    imageUrl: 'https://images.unsplash.com/photo-1536935338788-843bb6303669?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-44',
@@ -797,7 +840,8 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Shot / Rocas',
     garnish: 'Limón',
     flavorProfile: 'Cítrico, Fuerte',
-    whyItWorks: 'Piña suaviza el golpe del alcohol.'
+    whyItWorks: 'Piña suaviza el golpe del alcohol.',
+    imageUrl: 'https://images.unsplash.com/photo-1572097316712-4293f0607675?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'base-45',
@@ -815,7 +859,77 @@ export const BASE_GRIMOIRE_RECIPES: GeneratedRecipe[] = [
     glassType: 'Huracán / Copa Grande',
     garnish: 'Naranja y Cereza',
     flavorProfile: 'Frutal, Complejo',
-    whyItWorks: 'Hurricane style cocktail.'
+    whyItWorks: 'Hurricane style cocktail.',
+    imageUrl: 'https://images.unsplash.com/photo-1546171753-97d7676e4602?auto=format&fit=crop&w=800&q=80'
+  },
+  // --- GRUPO 5: CAPAS Y VISUALES (DENSIDAD) (46-48) ---
+  {
+    id: 'base-46',
+    createdAt: 1700000000046,
+    name: 'Arcoíris del Alquimista',
+    description: 'Una ilusión óptica de tres colores. Rojo intenso, naranja brillante y azul eléctrico. Mezclar antes de beber.',
+    ingredients: [
+       { item: 'Granadina', amount: '0.75 oz', notes: 'FONDO (Más denso)' },
+       { item: 'Jugo de Naranja', amount: '2 oz', notes: 'MEDIO (Verter suave)' },
+       { item: 'Vodka', amount: '1 oz', notes: 'TOPE' },
+       { item: 'Blue Curaçao (Toque)', amount: '0.25 oz', notes: 'Mezclar con Vodka' }
+    ],
+    instructions: [
+       'Verter Granadina directamente en el fondo del vaso.',
+       'Agregar hielo con cuidado.',
+       'Verter Jugo de Naranja suavemente sobre una cuchara (cuerpo).',
+       'Mezclar Vodka y Blue Curaçao aparte.',
+       'Flotar la mezcla azul suavemente sobre el reverso de la cuchara.'
+    ],
+    glassType: 'Highball / Huracán',
+    garnish: 'Naranja y Cereza',
+    flavorProfile: 'Dulce, Visual, Tricolor',
+    whyItWorks: 'La densidad del azúcar mantiene la granadina abajo y el alcohol mantiene el azul arriba.',
+    imageUrl: 'https://images.unsplash.com/photo-1542849187-5ec6ea5e6a43?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    id: 'base-47',
+    createdAt: 1700000000047,
+    name: 'Semáforo Tropical',
+    description: 'Rojo, Amarillo y Verde. Un trago divertido que entra por los ojos.',
+    ingredients: [
+       { item: 'Mermelada de Fresa/Roja', amount: '1 oz', notes: 'FONDO' },
+       { item: 'Jugo de Piña', amount: '2 oz', notes: 'MEDIO' },
+       { item: 'Licor de Melón', amount: '1 oz', notes: 'TOPE' },
+       { item: 'Ron Blanco', amount: '0.5 oz', notes: 'Con el melón' }
+    ],
+    instructions: [
+       'Colocar mermelada/coulis rojo al fondo.',
+       'Llenar con hielo picado.',
+       'Verter jugo de piña suavemente.',
+       'Flotar la mezcla de Licor de Melón y Ron al final.'
+    ],
+    glassType: 'Highball',
+    garnish: 'Rodaja de Limón',
+    flavorProfile: 'Frutal, Dulce, Neón',
+    whyItWorks: 'Juego de densidades creando bloques de color sólidos.',
+    imageUrl: 'https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    id: 'base-48',
+    createdAt: 1700000000048,
+    name: 'B-52 Tropical (Shot)',
+    description: 'Un shot en capas perfecto para la foto y el brindis.',
+    ingredients: [
+       { item: 'Licor de Café', amount: '0.5 oz', notes: 'FONDO' },
+       { item: 'Licor de Coco', amount: '0.5 oz', notes: 'MEDIO' },
+       { item: 'Triple Sec/Seco', amount: '0.5 oz', notes: 'TOPE' }
+    ],
+    instructions: [
+       'Verter Licor de Café.',
+       'Verter Licor de Coco sobre cuchara muy suavemente (es cremoso).',
+       'Flotar el Triple Sec o Seco Herrerano al final.'
+    ],
+    glassType: 'Shot (Caballito)',
+    garnish: 'Fuego (Opcional/Peligroso)',
+    flavorProfile: 'Café, Coco, Fuerte',
+    whyItWorks: 'Clásico Pousse-café adaptado al inventario tropical.',
+    imageUrl: 'https://images.unsplash.com/photo-1575254163821-4f108253a669?auto=format&fit=crop&w=800&q=80'
   }
 ];
 
