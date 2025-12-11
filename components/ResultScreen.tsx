@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { GeneratedRecipe, Language } from '../types';
-import { RefreshCw, Share2, Sparkles, Loader2, Beaker, Wine, Snowflake, Activity } from 'lucide-react';
+import { RefreshCw, Sparkles, Loader2, Beaker, Wine, Snowflake, Activity, Save } from 'lucide-react';
 import { TRANSLATIONS } from '../translations';
 
 interface Props {
@@ -11,177 +11,206 @@ interface Props {
 
 export const ResultScreen: React.FC<Props> = ({ recipe, onReset, language }) => {
   const t = TRANSLATIONS[language].result;
+  const [isSaved, setIsSaved] = useState(false);
+  
+  // 3D Tilt Logic
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = ((y - centerY) / centerY) * -10; // Invert tilt for natural feel
+    const rotateY = ((x - centerX) / centerX) * 10;
+
+    setRotate({ x: rotateX, y: rotateY });
+  };
+
+  const handleMouseLeave = () => {
+    setRotate({ x: 0, y: 0 });
+  };
+
+  const handleSaveAnimation = () => {
+    setIsSaved(true);
+    setTimeout(() => setIsSaved(false), 2000);
+  };
 
   return (
-    <div className="min-h-screen flex flex-col items-center p-0 md:p-8 animate-fade-in bg-void relative overflow-x-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 animate-fade-in bg-void relative overflow-hidden">
       
       {/* --- BACKGROUND --- */}
       <div className="absolute inset-0 pointer-events-none">
          <div className="absolute inset-0 bg-caribbean-night"></div>
          <div className="absolute top-0 right-0 w-[80vw] h-[80vw] bg-aqua-bio/10 rounded-full blur-[120px] animate-ocean-flow"></div>
+         {/* Grid Background */}
+         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl glass-panel md:rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-screen md:min-h-0 border-aqua-bio/20">
+      <div className="relative z-10 w-full max-w-6xl flex flex-col md:flex-row gap-8 items-start h-full md:h-[85vh]">
         
-        {/* --- LEFT COLUMN: THE HOOK --- */}
-        <div className="w-full md:w-5/12 relative h-[45vh] md:h-auto bg-black flex flex-col">
-          
-          {/* Image Container */}
-          <div className="relative h-full w-full overflow-hidden group">
+        {/* --- LEFT COLUMN: THE HOLO-CARD --- */}
+        <div className="w-full md:w-5/12 h-[50vh] md:h-full flex items-center justify-center perspective-1000">
+          <div 
+            ref={cardRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl transition-transform duration-200 ease-out group"
+            style={{ 
+              transform: `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+              transformStyle: 'preserve-3d'
+            }}
+          >
+             {/* Holographic Sheen */}
+             <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-40 z-30 pointer-events-none transition-opacity duration-300 mix-blend-overlay"></div>
+             
+             {/* Main Image */}
              {recipe.imageUrl ? (
-                <>
+                <div className="absolute inset-0 bg-black">
                   <img 
                     src={recipe.imageUrl} 
                     alt={recipe.name} 
-                    className="absolute inset-0 w-full h-full object-cover animate-reveal duration-1000 group-hover:scale-110 transition-transform duration-[20s]"
+                    className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-[10s]"
                   />
-                  {/* Tech/Tropical Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
-                  <div className="absolute inset-0 bg-aqua-bio/5 mix-blend-overlay"></div>
-                  
-                  {/* Neon Border Frame */}
-                  <div className="absolute inset-4 border border-aqua-bio/30 opacity-50 rounded-lg pointer-events-none"></div>
-                </>
+                  {/* Vignette */}
+                  <div className="absolute inset-0 bg-radial-gradient from-transparent to-black/80"></div>
+                </div>
               ) : (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-900">
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-900 border border-aqua-bio/20 rounded-3xl">
                    <div className="relative">
-                      <div className="absolute inset-0 bg-aqua-bio blur-xl opacity-30 animate-pulse"></div>
-                      <Loader2 className="w-10 h-10 text-aqua-bio animate-spin relative z-10" />
+                      <div className="absolute inset-0 bg-aqua-bio blur-2xl opacity-20 animate-pulse"></div>
+                      <Loader2 className="w-12 h-12 text-aqua-bio animate-spin relative z-10" />
                    </div>
-                   <p className="text-aqua-bio/70 font-tech text-xs tracking-widest uppercase mt-4 animate-pulse">{t.generating}</p>
+                   <p className="text-aqua-bio/70 font-tech text-xs tracking-[0.3em] uppercase mt-6 animate-pulse">{t.generating}</p>
                 </div>
               )}
-              
-              {/* Mobile Title Overlay */}
-              <div className="absolute bottom-0 left-0 w-full p-6 md:hidden z-20">
-                  <div className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-                    <h1 className="text-4xl font-display font-bold text-white mb-2 leading-none drop-shadow-lg chrome-text">
-                       {recipe.name}
-                    </h1>
-                    <div className="flex gap-2 flex-wrap">
-                        {recipe.flavorProfile.split(',').slice(0, 2).map((tag, i) => (
-                            <span key={i} className="px-2 py-1 border border-aqua-bio/30 text-[10px] text-aqua-bio font-tech uppercase tracking-wider rounded bg-black/60 backdrop-blur-md">
-                                {tag.trim()}
-                            </span>
-                        ))}
-                    </div>
-                </div>
+
+              {/* Overlay Content on Card */}
+              <div className="absolute bottom-0 left-0 w-full p-8 z-20 bg-gradient-to-t from-black via-black/60 to-transparent translate-z-10">
+                 <div className="flex items-center gap-2 mb-2 opacity-80">
+                    <div className="w-1.5 h-1.5 rounded-full bg-solar-coral animate-ping"></div>
+                    <span className="text-solar-coral font-tech text-[10px] tracking-[0.2em] uppercase">Gemini 3 Generated</span>
+                 </div>
+                 <h1 className="text-4xl md:text-5xl font-display font-bold text-white leading-none chrome-text drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
+                    {recipe.name}
+                 </h1>
+                 <div className="mt-4 flex flex-wrap gap-2">
+                    {recipe.flavorProfile.split(',').map((tag, i) => (
+                        <span key={i} className="px-2 py-1 bg-white/10 backdrop-blur-md border border-white/10 rounded text-[9px] text-white font-tech uppercase tracking-wider">
+                            {tag.trim()}
+                        </span>
+                    ))}
+                 </div>
               </div>
-          </div>
-          
-          {/* Desktop Title Overlay */}
-          <div className="absolute bottom-0 left-0 w-full p-10 hidden md:block z-20 bg-gradient-to-t from-black via-black/80 to-transparent">
-             <div className="flex items-center gap-2 mb-3">
-                <div className="w-2 h-2 rounded-full bg-solar-coral animate-pulse"></div>
-                <span className="text-solar-coral font-tech text-xs tracking-[0.2em] uppercase">{t.success}</span>
-             </div>
-             <h1 className="text-5xl font-display font-bold text-white mb-4 leading-none chrome-text drop-shadow-[0_0_15px_rgba(0,242,255,0.3)]">
-                {recipe.name}
-             </h1>
-             <p className="text-gray-300 font-sans font-light leading-relaxed mb-6 italic border-l-2 border-aqua-bio pl-4">
-                "{recipe.description}"
-             </p>
-             <div className="flex gap-2 flex-wrap">
-                {recipe.flavorProfile.split(',').map((tag, i) => (
-                    <span key={i} className="px-3 py-1 border border-white/10 text-[10px] text-white/90 font-tech uppercase tracking-wider rounded-full hover:border-aqua-bio hover:text-aqua-bio hover:bg-aqua-bio/10 transition-all bg-white/5 cursor-default">
-                        {tag.trim()}
-                    </span>
-                ))}
-            </div>
+              
+              {/* Border Glow */}
+              <div className="absolute inset-0 border border-white/10 rounded-3xl z-40 pointer-events-none"></div>
           </div>
         </div>
 
-        {/* --- RIGHT COLUMN: THE SPECS --- */}
-        <div className="w-full md:w-7/12 p-6 md:p-10 flex flex-col relative bg-black/40 backdrop-blur-md">
+        {/* --- RIGHT COLUMN: THE DATA STREAM --- */}
+        <div className="w-full md:w-7/12 h-full glass-panel rounded-3xl p-6 md:p-10 flex flex-col overflow-y-auto custom-scrollbar border-t border-white/10 md:border-t-0 md:border-l relative">
           
-          {/* Mobile Description */}
-          <p className="text-sm text-gray-400 font-sans font-light mb-6 md:hidden border-l-2 border-aqua-bio pl-3">
-              "{recipe.description}"
-          </p>
+          {/* Decorative Lines */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-aqua-bio/10 to-transparent rounded-bl-full pointer-events-none"></div>
 
-          {/* Header Specs - Holographic Pills */}
-          <div className="flex flex-wrap gap-3 mb-8 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-             <div className="flex items-center gap-3 px-4 py-3 bg-white/5 rounded-xl border border-white/10 hover:border-deep-purple/50 transition-colors">
-                <Wine className="w-4 h-4 text-deep-purple" />
-                <div className="flex flex-col">
-                    <span className="text-[9px] text-gray-500 font-tech uppercase">{t.glassware}</span>
-                    <span className="text-white font-sans text-xs font-bold tracking-wide">{recipe.glassType}</span>
+          <div className="mb-8">
+             <h2 className="text-sm font-tech text-aqua-bio uppercase tracking-[0.2em] mb-4 opacity-70 flex items-center gap-2">
+               <Activity className="w-4 h-4" /> {t.analysis}
+             </h2>
+             <p className="text-lg md:text-xl text-white font-sans font-light leading-relaxed border-l-2 border-aqua-bio pl-4 italic">
+                "{recipe.description}"
+             </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 mb-8">
+             <div className="p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-deep-purple/40 transition-colors">
+                <div className="flex items-center gap-2 mb-2 text-deep-purple">
+                   <Wine className="w-4 h-4" />
+                   <span className="text-[10px] font-tech uppercase tracking-widest">{t.glassware}</span>
+                </div>
+                <span className="text-white font-bold">{recipe.glassType}</span>
+             </div>
+             <div className="p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-solar-coral/40 transition-colors">
+                <div className="flex items-center gap-2 mb-2 text-solar-coral">
+                   <Snowflake className="w-4 h-4" />
+                   <span className="text-[10px] font-tech uppercase tracking-widest">{t.garnish}</span>
+                </div>
+                <span className="text-white font-bold">{recipe.garnish}</span>
+             </div>
+          </div>
+
+          <div className="flex-1 grid md:grid-cols-2 gap-8 md:gap-12 mb-8">
+             {/* Ingredients List */}
+             <div>
+                <h3 className="text-xs font-tech text-gray-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                   <Sparkles className="w-3 h-3 text-aqua-bio" /> {t.elements}
+                </h3>
+                <ul className="space-y-3">
+                   {recipe.ingredients.map((ing, i) => (
+                      <li key={i} className="flex justify-between items-baseline text-sm group">
+                         <span className="text-gray-300 group-hover:text-white transition-colors">{ing.item}</span>
+                         <div className="relative">
+                            <span className="text-aqua-bio font-mono font-bold">{ing.amount}</span>
+                            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-aqua-bio/30 scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></div>
+                         </div>
+                      </li>
+                   ))}
+                </ul>
+             </div>
+
+             {/* Instructions */}
+             <div>
+                <h3 className="text-xs font-tech text-gray-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                   <Beaker className="w-3 h-3 text-solar-coral" /> {t.algorithm}
+                </h3>
+                <div className="space-y-4 relative">
+                   {/* Vertical Line */}
+                   <div className="absolute left-[11px] top-2 bottom-2 w-[1px] bg-white/10"></div>
+                   
+                   {recipe.instructions.map((step, i) => (
+                      <div key={i} className="flex gap-4 relative">
+                         <div className="w-6 h-6 rounded-full bg-void border border-white/20 flex items-center justify-center shrink-0 z-10 text-[10px] font-mono text-gray-400">
+                            {i + 1}
+                         </div>
+                         <p className="text-sm text-gray-300 leading-relaxed">{step}</p>
+                      </div>
+                   ))}
                 </div>
              </div>
-             <div className="flex items-center gap-3 px-4 py-3 bg-white/5 rounded-xl border border-white/10 hover:border-aqua-bio/50 transition-colors">
-                <Snowflake className="w-4 h-4 text-aqua-bio" />
-                <div className="flex flex-col">
-                    <span className="text-[9px] text-gray-500 font-tech uppercase">{t.garnish}</span>
-                    <span className="text-white font-sans text-xs font-bold tracking-wide">{recipe.garnish}</span>
-                </div>
-             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-8">
-            
-            {/* Ingredients */}
-            <div className="relative animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-              <h3 className="text-aqua-bio font-tech font-bold text-xs tracking-[0.2em] mb-4 flex items-center gap-2">
-                 <Sparkles className="w-3 h-3" /> {t.elements}
-              </h3>
-              <ul className="space-y-3">
-                {recipe.ingredients.map((ing, i) => (
-                  <li key={i} className="flex justify-between items-center group p-3 rounded-xl bg-white/5 border border-white/5 hover:border-aqua-bio/30 hover:bg-aqua-bio/5 transition-all cursor-default">
-                    <span className="text-gray-200 font-sans text-sm font-medium">{ing.item}</span>
-                    <div className="text-right">
-                      <span className="text-white font-mono text-sm block font-bold text-shadow">{ing.amount}</span>
-                      {ing.notes && <span className="text-[9px] text-gray-500 uppercase font-tech">{ing.notes}</span>}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Instructions */}
-            <div className="animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-               <h3 className="text-solar-coral font-tech font-bold text-xs tracking-[0.2em] mb-4 flex items-center gap-2">
-                 <Beaker className="w-3 h-3" /> {t.algorithm}
-              </h3>
-               <div className="space-y-4">
-                 {recipe.instructions.map((step, i) => (
-                  <div key={i} className="flex gap-4 group">
-                    <div className="w-6 h-6 rounded-lg bg-solar-coral/10 border border-solar-coral/30 flex items-center justify-center shrink-0 group-hover:bg-solar-coral group-hover:text-black transition-colors duration-300">
-                        <span className="text-[10px] text-solar-coral font-mono font-bold group-hover:text-black">{i + 1}</span>
-                    </div>
-                    <div>
-                        <p className="text-gray-300 text-sm font-sans leading-relaxed group-hover:text-white transition-colors">{step}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          
-          {/* Science/Why it works */}
-          <div className="p-5 rounded-2xl bg-gradient-to-r from-deep-purple/20 to-transparent border border-deep-purple/30 mb-8 animate-fade-in-up hover:shadow-glow-aqua transition-shadow duration-500">
-             <div className="flex items-center gap-2 mb-2">
-                <Activity className="w-3 h-3 text-aqua-bio" />
-                <p className="text-xs text-aqua-bio font-tech font-bold uppercase">{t.analysis}</p>
-             </div>
-             <p className="text-sm text-gray-200 font-sans italic leading-relaxed">"{recipe.whyItWorks}"</p>
-          </div>
-
-          {/* Action Bar */}
-          <div className="mt-auto flex flex-col md:flex-row gap-4 animate-fade-in" style={{ animationDelay: '0.8s' }}>
-            <button
-              onClick={onReset}
-              className="flex-1 px-6 py-4 border border-white/10 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all font-tech font-bold text-xs tracking-wider uppercase flex items-center justify-center hover:border-white/30"
-            >
-              <RefreshCw className="w-4 h-4 mr-2" />
-              {t.restart}
-            </button>
-            <button 
-              onClick={() => alert("Archivado en la red neuronal.")}
-              className="flex-1 px-6 py-4 bg-gradient-to-r from-aqua-bio to-blue-500 text-black rounded-xl hover:scale-[1.02] transition-all font-tech font-bold text-xs tracking-wider uppercase flex items-center justify-center shadow-glow-aqua"
-            >
-              <Share2 className="w-4 h-4 mr-2" />
-              {t.archive}
-            </button>
+          <div className="mt-auto flex gap-4 pt-6 border-t border-white/10">
+             <button
+                onClick={onReset}
+                className="flex-1 py-4 rounded-xl border border-white/10 hover:bg-white/5 text-gray-400 hover:text-white font-tech text-xs tracking-[0.2em] uppercase transition-all flex items-center justify-center gap-2"
+             >
+                <RefreshCw className="w-4 h-4" />
+                {t.restart}
+             </button>
+             
+             <button
+                onClick={handleSaveAnimation}
+                disabled={isSaved}
+                className={`flex-1 py-4 rounded-xl font-tech text-xs tracking-[0.2em] uppercase transition-all flex items-center justify-center gap-2 shadow-lg ${
+                   isSaved 
+                   ? 'bg-green-500/20 text-green-400 border border-green-500/50' 
+                   : 'bg-gradient-to-r from-aqua-bio to-deep-purple text-black font-bold hover:scale-[1.02] hover:shadow-glow-aqua'
+                }`}
+             >
+                {isSaved ? (
+                   <>Saved to Core</>
+                ) : (
+                   <>
+                     <Save className="w-4 h-4" /> {t.archive}
+                   </>
+                )}
+             </button>
           </div>
 
         </div>

@@ -2,7 +2,7 @@ import { GoogleGenAI, Type, Schema } from "@google/genai";
 import { GeneratedRecipe, InventoryItem, Language } from "../types";
 import { BASE_GRIMOIRE_RECIPES } from "../constants";
 
-const genAI = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// NOTE: GoogleGenAI instance is now created inside functions to support dynamic API Key selection
 
 const RECIPE_SCHEMA: Schema = {
   type: Type.OBJECT,
@@ -94,6 +94,9 @@ export const generateCocktailRecipe = async (
   language: Language = 'es'
 ): Promise<GeneratedRecipe> => {
   
+  // Initialize AI client inside the function to use the latest process.env.API_KEY
+  const genAI = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
   const inventoryStr = inventory.map(cat => `${cat.category}: ${cat.items.join(', ')}`).join('\n');
   const userVibes = userResponses.join(', ');
   const baseRecipesContext = generateGrimoireContext();
@@ -135,7 +138,7 @@ export const generateCocktailRecipe = async (
 
   try {
     const response = await genAI.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3-pro-preview', // UPGRADED to Gemini 3 Pro
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
@@ -178,6 +181,9 @@ export const generateCocktailRecipe = async (
 };
 
 export const generateCocktailImage = async (recipe: GeneratedRecipe): Promise<string | null> => {
+  // Initialize AI client inside the function to use the latest process.env.API_KEY
+  const genAI = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
   try {
     const prompt = `
       Professional food photography of a cocktail named "${recipe.name}".
@@ -190,9 +196,15 @@ export const generateCocktailImage = async (recipe: GeneratedRecipe): Promise<st
     `;
 
     const response = await genAI.models.generateContent({
-      model: 'gemini-2.5-flash-image',
+      model: 'gemini-3-pro-image-preview', // UPGRADED to Gemini 3 Pro Image
       contents: {
         parts: [{ text: prompt }]
+      },
+      config: {
+        imageConfig: {
+          aspectRatio: "1:1",
+          imageSize: "1K"
+        }
       }
     });
 

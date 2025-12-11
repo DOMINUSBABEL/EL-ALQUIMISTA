@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Hexagon, Stars } from 'lucide-react';
+import { Hexagon, BrainCircuit, Sparkles } from 'lucide-react';
 import { Language } from '../types';
 import { TRANSLATIONS } from '../translations';
 
@@ -8,15 +8,13 @@ interface Props {
 }
 
 const LOADING_MESSAGES_KEY = [
-  "Consultando el Grimorio Maestro...",
-  "Infusionando extractos lunares...",
-  "Calculando densidades de fluidos...",
-  "Decantando sueños líquidos...",
-  "Armonizando los cuatro elementos...",
-  "Destilando la esencia de la noche...",
-  "Transmutando ingredientes...",
-  "Equilibrando el Yin y el Yang del sabor...",
-  "Invocando al espíritu del agave..."
+  "Conectando con Gemini 3 Pro...",
+  "Analizando vectores de sabor...",
+  "Optimizando márgenes de rentabilidad...",
+  "Simulando física de fluidos...",
+  "Generando geometría molecular...",
+  "Renderizando fotones en tiempo real...",
+  "Aplicando filtros de alquimia...",
 ];
 
 export const LoadingScreen: React.FC<Props> = ({ language }) => {
@@ -26,65 +24,69 @@ export const LoadingScreen: React.FC<Props> = ({ language }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setMessageIndex((prev) => (prev + 1) % LOADING_MESSAGES_KEY.length);
-    }, 2500);
+    }, 2000);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center animate-fade-in bg-void relative overflow-hidden">
       
-      {/* Background with fluid liquid animation */}
+      {/* Dynamic Background */}
       <div className="absolute inset-0 bg-caribbean-night"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-aqua-bio/10 rounded-full blur-[80px] animate-liquid mix-blend-screen"></div>
-      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-deep-purple/20 to-transparent opacity-50"></div>
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 animate-pulse-slow"></div>
       
-      <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/water.png')] animate-ocean-flow"></div>
-
-      <div className="relative z-10 flex flex-col items-center">
-        
-        {/* Alchemical Circle Animation */}
-        <div className="relative w-48 h-48 flex items-center justify-center mb-12">
-            {/* Outer Ring */}
-            <div className="absolute inset-0 border border-aqua-bio/30 rounded-full animate-spin-slow border-dashed"></div>
-            <div className="absolute -inset-4 border border-solar-coral/10 rounded-full animate-spin-reverse"></div>
+      {/* Central Neural Network Visual */}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full">
+         
+         <div className="relative w-64 h-64 flex items-center justify-center mb-12">
+            {/* Outer Rotating Rings */}
+            <div className="absolute inset-0 border border-aqua-bio/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
+            <div className="absolute inset-4 border border-deep-purple/20 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+            <div className="absolute inset-8 border border-white/10 rounded-full animate-[spin_20s_linear_infinite]"></div>
             
-            {/* Middle Geometric Shapes */}
-            <div className="absolute inset-6 border border-white/20 rotate-45 animate-spin-reverse opacity-60 rounded-xl"></div>
-            
-            {/* Inner Glowing Core */}
+            {/* Pulsing Core */}
             <div className="absolute inset-0 flex items-center justify-center">
-               <div className="w-24 h-24 bg-aqua-bio/20 rounded-full blur-xl animate-pulse-slow"></div>
-               <Hexagon className="w-16 h-16 text-white animate-float drop-shadow-[0_0_20px_rgba(0,242,255,0.8)]" strokeWidth={0.5} />
+                <div className="w-32 h-32 bg-aqua-bio/5 rounded-full blur-2xl animate-pulse"></div>
             </div>
-            
+
+            {/* Center Icon */}
+            <div className="relative z-10">
+               <BrainCircuit className="w-16 h-16 text-aqua-bio animate-pulse stroke-[1]" />
+            </div>
+
             {/* Orbiting Particles */}
-            <div className="absolute top-0 left-1/2 w-3 h-3 bg-solar-coral rounded-full blur-[2px] animate-ping"></div>
-        </div>
-        
-        <h2 className="text-4xl font-display text-white tracking-[0.2em] mb-8 animate-pulse text-shadow-lg chrome-text">
-          {t.title}
-        </h2>
-        
-        {/* Loading Bar */}
-        <div className="w-64 h-1 bg-white/10 rounded-full overflow-hidden mb-8 relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-aqua-bio to-solar-coral animate-shimmer w-full blur-[1px]"></div>
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-50"></div>
-        </div>
-        
-        <div className="h-8 overflow-hidden relative w-full max-w-lg">
-            {/* Note: In a real multi-lang setup, these specific creative messages should also be in the translation file. 
-                For now we keep them artistic/hardcoded or basic translation for the title. */}
-            <p key={messageIndex} className="text-aqua-bio/80 font-serif italic text-xl animate-fade-in-up absolute w-full left-0">
-              {LOADING_MESSAGES_KEY[messageIndex]}
+            <div className="absolute w-full h-full animate-[spin_4s_linear_infinite]">
+               <div className="absolute top-0 left-1/2 w-2 h-2 bg-solar-coral rounded-full shadow-[0_0_10px_rgba(255,94,87,0.8)]"></div>
+            </div>
+            <div className="absolute w-2/3 h-2/3 animate-[spin_6s_linear_infinite_reverse]">
+               <div className="absolute bottom-0 left-1/2 w-2 h-2 bg-aqua-bio rounded-full shadow-[0_0_10px_rgba(0,242,255,0.8)]"></div>
+            </div>
+         </div>
+
+         <h2 className="text-5xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-aqua-bio to-white animate-shimmer bg-[length:200%_auto] mb-8 tracking-tight">
+            {t.title}
+         </h2>
+
+         {/* Tech Loading Bar */}
+         <div className="w-72 h-1 bg-white/10 rounded-full overflow-hidden mb-8 relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-aqua-bio to-transparent w-1/2 animate-[translateX_1.5s_ease-in-out_infinite]"></div>
+         </div>
+
+         {/* Changing Text */}
+         <div className="h-8 flex items-center justify-center">
+            <p key={messageIndex} className="font-tech text-aqua-bio/80 uppercase tracking-[0.2em] text-xs animate-fade-in-up">
+               {LOADING_MESSAGES_KEY[messageIndex]}
             </p>
-        </div>
+         </div>
+
       </div>
-      
-      <div className="absolute bottom-6 flex gap-2 text-[10px] text-gray-500 uppercase tracking-widest font-display opacity-70">
-        <Stars className="w-3 h-3 text-solar-coral" />
-        <span>{t.ars}</span>
-        <Stars className="w-3 h-3 text-solar-coral" />
+
+      <div className="absolute bottom-8 flex gap-3 text-[9px] text-gray-600 font-tech uppercase tracking-[0.3em] opacity-60">
+         <Sparkles className="w-3 h-3 text-deep-purple" />
+         <span>Neural Link Active</span>
+         <Sparkles className="w-3 h-3 text-deep-purple" />
       </div>
+
     </div>
   );
 };

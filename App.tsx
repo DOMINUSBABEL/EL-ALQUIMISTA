@@ -9,9 +9,17 @@ import { QuickSelectionScreen } from './components/QuickSelectionScreen';
 import { LanguageSelector } from './components/LanguageSelector';
 import { ThemeSelector } from './components/ThemeSelector';
 import { AppState, GeneratedRecipe, Language, ThemeId } from './types';
-import { INVENTORY, SCENARIO_QUESTIONS, BASE_GRIMOIRE_RECIPES } from './constants';
+import { INVENTORY, BASE_GRIMOIRE_RECIPES } from './constants';
 import { generateCocktailRecipe, generateCocktailImage } from './services/geminiService';
+import { saveHistorySafe, loadHistory } from './services/storageService';
 import { THEMES } from './themes';
+import { Zap, ExternalLink } from 'lucide-react';
+
+// Local interface definition to avoid global namespace conflicts
+interface AIStudio {
+  hasSelectedApiKey: () => Promise<boolean>;
+  openSelectKey: () => Promise<void>;
+}
 
 const App: React.FC = () => {
   const [appState, setAppState] = useState<AppState>('login');
@@ -20,17 +28,46 @@ const App: React.FC = () => {
   const [quickOptions, setQuickOptions] = useState<GeneratedRecipe[]>([]);
   const [language, setLanguage] = useState<Language>('es');
   const [theme, setTheme] = useState<ThemeId>('pirate');
+  const [hasApiKey, setHasApiKey] = useState<boolean>(false);
+  const [checkingKey, setCheckingKey] = useState<boolean>(true);
+
+  // Check for API Key on mount (Required for Gemini 3)
+  useEffect(() => {
+    const checkKey = async () => {
+      try {
+        const aistudio = (window as any).aistudio as AIStudio | undefined;
+        if (aistudio) {
+          const has = await aistudio.hasSelectedApiKey();
+          setHasApiKey(has);
+        } else {
+          // Fallback for dev environments without the wrapper (assumes .env key is present)
+          setHasApiKey(true);
+        }
+      } catch (e) {
+        console.error("Error checking API key", e);
+        setHasApiKey(false);
+      } finally {
+        setCheckingKey(false);
+      }
+    };
+    checkKey();
+  }, []);
+
+  const handleSelectKey = async () => {
+    const aistudio = (window as any).aistudio as AIStudio | undefined;
+    if (aistudio) {
+      try {
+        await aistudio.openSelectKey();
+        setHasApiKey(true);
+      } catch (e) {
+        console.error("Key selection failed", e);
+      }
+    }
+  };
 
   // Load history on mount
   useEffect(() => {
-    const saved = localStorage.getItem('alquimista_history');
-    if (saved) {
-      try {
-        setHistory(JSON.parse(saved));
-      } catch (e) {
-        console.error("Error loading history", e);
-      }
-    }
+    setHistory(loadHistory());
   }, []);
 
   // Update document direction for Arabic
@@ -56,13 +93,10 @@ const App: React.FC = () => {
     }
   }, [theme]);
 
+  // Use the safe storage service
   const saveToHistory = (newRecipe: GeneratedRecipe) => {
-    const recipeToSave = { ...newRecipe, imageUrl: undefined }; 
-    setHistory(prev => {
-      const updated = [recipeToSave, ...prev];
-      localStorage.setItem('alquimista_history', JSON.stringify(updated));
-      return updated;
-    });
+    const updatedHistory = saveHistorySafe(newRecipe, history);
+    setHistory(updatedHistory);
   };
 
   const handleLoginSuccess = () => {
@@ -91,12 +125,16 @@ const App: React.FC = () => {
       setRecipe(recipeData);
       setAppState('result');
       
+      // Initial save without image
       saveToHistory(recipeData);
 
       // Step 2: Generate the image in the background (Slower)
       generateCocktailImage(recipeData).then((imageUrl) => {
         if (imageUrl) {
-          setRecipe(prev => prev ? { ...prev, imageUrl } : null);
+          const recipeWithImage = { ...recipeData, imageUrl };
+          setRecipe(prev => (prev && prev.id === recipeData.id) ? recipeWithImage : prev);
+          // Update history with the image
+          saveToHistory(recipeWithImage);
         }
       });
 
@@ -119,14 +157,24 @@ const App: React.FC = () => {
   };
 
   const handleQuickSelection = (selectedRecipe: GeneratedRecipe) => {
-    setRecipe(selectedRecipe);
+    // For quick selection, we treat it as a new generation to save it to history
+    const newInstance = { 
+        ...selectedRecipe, 
+        id: crypto.randomUUID(), 
+        createdAt: Date.now() 
+    };
+    
+    setRecipe(newInstance);
     setAppState('result');
-    saveToHistory(selectedRecipe);
+    saveToHistory(newInstance);
 
-    if (!selectedRecipe.imageUrl) {
-        generateCocktailImage(selectedRecipe).then((imageUrl) => {
+    // If base recipe has image, keep it, otherwise generate (though base usually has url)
+    if (!newInstance.imageUrl) {
+        generateCocktailImage(newInstance).then((imageUrl) => {
             if (imageUrl) {
-              setRecipe(prev => prev ? { ...prev, imageUrl } : null);
+              const updated = { ...newInstance, imageUrl };
+              setRecipe(prev => (prev && prev.id === newInstance.id) ? updated : prev);
+              saveToHistory(updated);
             }
         });
     }
@@ -136,6 +184,37 @@ const App: React.FC = () => {
     setRecipe(null);
     setAppState('welcome');
   };
+
+  // API KEY BLOCKING SCREEN (Gemini 3 Requirement)
+  if (!checkingKey && !hasApiKey) {
+    return (
+      <div className="min-h-screen bg-void flex items-center justify-center p-6 text-center transition-colors duration-700">
+         <div className="absolute inset-0 bg-caribbean-night opacity-80"></div>
+         <div className="relative z-10 max-w-md w-full glass-panel rounded-3xl p-8 border border-aqua-bio/30 shadow-glow-aqua/20">
+             <div className="flex justify-center mb-6">
+                <div className="p-4 bg-aqua-bio/10 rounded-full border border-aqua-bio/50 animate-pulse-slow">
+                   <Zap className="w-10 h-10 text-aqua-bio" />
+                </div>
+             </div>
+             <h1 className="text-3xl font-display font-bold text-white mb-4 tracking-tight">Gemini 3.0</h1>
+             <p className="text-gray-300 font-sans mb-8">
+               Para invocar los modelos Gemini 3 Pro e Image 3, se requiere una configuración de energía avanzada (API Key).
+             </p>
+             <button 
+                onClick={handleSelectKey}
+                className="w-full py-4 bg-aqua-bio text-black font-tech font-bold text-sm tracking-[0.2em] uppercase rounded-xl hover:bg-white transition-colors shadow-glow-aqua"
+             >
+                Conectar Energía
+             </button>
+             <div className="mt-6">
+               <a href="https://ai.google.dev/gemini-api/docs/billing" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-[10px] text-gray-500 hover:text-aqua-bio uppercase tracking-widest transition-colors font-tech">
+                 Documentación de Facturación <ExternalLink className="w-3 h-3" />
+               </a>
+             </div>
+         </div>
+      </div>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-void text-white font-sans selection:bg-aqua-bio selection:text-black transition-colors duration-700">
