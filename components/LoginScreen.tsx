@@ -33,22 +33,50 @@ export const LoginScreen: React.FC<Props> = ({ onLoginSuccess, language }) => {
     }, 800);
   };
 
+  // --- Particle Generation (Reduced for Login for better focus) ---
+  const particles = Array.from({ length: 15 }).map((_, i) => ({
+    top: `${Math.random() * 100}%`,
+    left: `${Math.random() * 100}%`,
+    size: `${Math.random() * 2 + 1}px`,
+    duration: `${Math.random() * 4 + 3}s`,
+    delay: `${Math.random() * 2}s`
+  }));
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-void transition-colors duration-700">
       
-      {/* --- BACKGROUND ATMOSPHERE --- */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-caribbean-night opacity-80 transition-all duration-700"></div>
-        {/* Abstract Fluid Glows */}
-        <div className="absolute top-[-20%] right-[-10%] w-[80vw] h-[80vw] bg-aqua-bio/10 rounded-full blur-[100px] animate-ocean-flow mix-blend-screen transition-colors duration-700"></div>
-        <div className="absolute bottom-[-20%] left-[-10%] w-[80vw] h-[80vw] bg-solar-coral/10 rounded-full blur-[100px] animate-ocean-flow mix-blend-screen" style={{ animationDelay: '2s' }}></div>
+      {/* --- BACKGROUND ATMOSPHERE (Consistent with Welcome) --- */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 bg-caribbean-night opacity-90 transition-all duration-700"></div>
         
-        {/* Dynamic Theme Texture */}
+        {/* Dynamic Nebulas */}
+        <div className="absolute top-[-20%] right-[-10%] w-[100vw] h-[100vw] bg-aqua-bio/10 rounded-full blur-[120px] animate-nebula-drift mix-blend-screen transition-colors duration-700"></div>
+        <div className="absolute bottom-[-20%] left-[-10%] w-[100vw] h-[100vw] bg-solar-coral/10 rounded-full blur-[120px] animate-nebula-drift mix-blend-screen" style={{ animationDelay: '2s', animationDirection: 'alternate-reverse' }}></div>
+        
+        {/* Texture */}
         <div className="absolute inset-0 bg-theme-pattern opacity-10 mix-blend-overlay"></div>
         
+        {/* Stardust */}
+        <div className="stardust-container">
+          {particles.map((p, i) => (
+            <div 
+              key={i} 
+              className="star-particle bg-white/40 shadow-[0_0_5px_rgba(255,255,255,0.4)]"
+              style={{
+                top: p.top,
+                left: p.left,
+                width: p.size,
+                height: p.size,
+                '--duration': p.duration,
+                '--delay': p.delay
+              } as React.CSSProperties}
+            ></div>
+          ))}
+        </div>
+        
         {/* Sacred Geometry */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white/5 rounded-full animate-spin-slow dashed-border"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/5 rotate-45 animate-spin-reverse"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white/5 rounded-full animate-spin-slow dashed-border opacity-50"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/5 rotate-45 animate-spin-reverse opacity-50"></div>
       </div>
       
       <div className="w-full max-w-[420px] animate-fade-in relative z-10 flex flex-col items-center">
@@ -67,7 +95,7 @@ export const LoginScreen: React.FC<Props> = ({ onLoginSuccess, language }) => {
 
         {/* TITLE */}
         <div className="text-center mb-10">
-            <h1 className="font-display font-bold text-4xl text-white mb-2 tracking-tight tropical-gradient-text transition-all duration-700">
+            <h1 className="font-display font-bold text-4xl text-white mb-2 tracking-tight tropical-gradient-text transition-all duration-700 drop-shadow-md">
               Alquimista
             </h1>
             <p className="font-tech text-xs tracking-[0.4em] text-aqua-bio/80 uppercase transition-colors duration-700">
@@ -76,7 +104,7 @@ export const LoginScreen: React.FC<Props> = ({ onLoginSuccess, language }) => {
         </div>
 
         {/* GLASS CARD FORM */}
-        <div className="w-full glass-panel rounded-3xl p-8 relative overflow-hidden group-form border-aqua-bio/20 shadow-glow-aqua/10 transition-all duration-700">
+        <div className="w-full glass-panel rounded-3xl p-8 relative overflow-hidden group-form border-aqua-bio/20 shadow-glow-aqua/10 transition-all duration-700 backdrop-blur-xl">
             
             {/* Top Shine */}
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-aqua-bio/50 to-transparent transition-all duration-700"></div>

@@ -27,7 +27,7 @@ const App: React.FC = () => {
   const [history, setHistory] = useState<GeneratedRecipe[]>([]);
   const [quickOptions, setQuickOptions] = useState<GeneratedRecipe[]>([]);
   const [language, setLanguage] = useState<Language>('es');
-  const [theme, setTheme] = useState<ThemeId>('pirate');
+  const [theme, setTheme] = useState<ThemeId>('alchemist');
   const [hasApiKey, setHasApiKey] = useState<boolean>(false);
   const [checkingKey, setCheckingKey] = useState<boolean>(true);
 

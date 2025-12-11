@@ -53,6 +53,8 @@
               'liquid': 'liquid 8s ease-in-out infinite',
               'pop': 'pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
               'glitch': 'glitch 4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite',
+              'nebula-drift': 'nebulaDrift 20s ease-in-out infinite alternate',
+              'twinkle': 'twinkle 4s ease-in-out infinite',
             },
             keyframes: {
               fadeIn: {
@@ -86,6 +88,14 @@
                  '60%': { transform: 'translate(2px, 2px)' },
                  '80%': { transform: 'translate(2px, -2px)' },
                  '100%': { transform: 'translate(0)' }
+              },
+              nebulaDrift: {
+                '0%': { transform: 'translate(0, 0) scale(1)' },
+                '100%': { transform: 'translate(-5%, -5%) scale(1.1)' }
+              },
+              twinkle: {
+                '0%, 100%': { opacity: '0.3', transform: 'scale(1)' },
+                '50%': { opacity: '0.8', transform: 'scale(1.2)' }
               }
             }
           }
@@ -142,6 +152,25 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
+      
+      /* STARDUST PARTICLES SYSTEM */
+      .stardust-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      
+      .star-particle {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        opacity: 0;
+        animation: twinkle var(--duration, 3s) ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
+      }
+
       /* RTL Support */
       [dir="rtl"] {
         font-family: 'Cairo', 'Inter', sans-serif;
